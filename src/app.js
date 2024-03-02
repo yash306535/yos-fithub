@@ -4,6 +4,7 @@ const path = require("path");
 const hbs = require("hbs");
 const router = express.Router();
 const connectDb = require("./db/conn");
+const { connect, close } = require('./db');
 
 const Register = require('./models/registers');
 const Trainer_Register = require('./models/Trainer_register');
@@ -18,7 +19,7 @@ const Progress = require('./models/Progress'); // Update with your actual model 
 const multer = require('multer');
 const purchaseRoutes = require('./routes/purchase-routes');
 const MongoStore = require('connect-mongo');
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const trainerRoutes = require('./routes/trainer-routes');
 const static_path = path.join(__dirname, "../public");
 app.use(express.static(static_path));
@@ -38,7 +39,17 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+connect();
 
+process.on('SIGINT', async () => {
+  await close();
+  process.exit();
+});
+
+// Start the Express server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 app.get('/', (req, res) => {
     res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
   });
@@ -938,17 +949,3 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });
 
-connectDb.connectDb();
-
-// Your other app configurations and routes go here...
-
-// Close MongoDB connection on process termination
-process.on("SIGINT", async () => {
-    await connectDb.closeDbConnection();
-    process.exit(0);
-});
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running at port ${port}`);
-});
