@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
-const URI = mongoose.connect("mongodb://127.0.0.1:27017/gym");
 
-URI.then(() => {
-    console.log("Database connected");
-}).catch(() => {
-    console.log("Not connected");
-});
 
 const userSchema = new mongoose.Schema({
     name: {

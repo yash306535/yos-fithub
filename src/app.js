@@ -4,6 +4,7 @@ const path = require("path");
 const hbs = require("hbs");
 const router = express.Router();
 const connectDb = require("./db/conn");
+
 const Register = require('./models/registers');
 const Trainer_Register = require('./models/Trainer_register');
 const Profile = require('./models/profile');
@@ -18,7 +19,7 @@ const Progress = require('./models/Progress'); // Update with your actual model 
 const multer = require('multer');
 const purchaseRoutes = require('./routes/purchase-routes');
 const MongoStore = require('connect-mongo');
-const port = 3000;
+const port = process.env.PORT || 3000;
 const crypto = require('crypto');
 const trainerRoutes = require('./routes/trainer-routes');
 const static_path = path.join(__dirname, "../public");
@@ -42,7 +43,7 @@ app.use(
         secret: 'yash',
         resave: false,
         saveUninitialized: false,
-        store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/gym' }),
+        store: MongoStore.create({ mongoUrl: 'mongodb+srv://yashvant:yash3005@yos-fithub.ra5uf3v.mongodb.net/?retryWrites=true&w=majority&appName=yos-fithub' }),
         
     })
 );
@@ -933,11 +934,17 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });
 
-// Connect to MongoDB and start the server
-connectDb().then(() => {
-    console.log('Connected to MongoDB');
+connectDb.connectDb();
 
-    app.listen(port, () => {
-        console.log('Server is running at port no', port);
-    });
+// Your other app configurations and routes go here...
+
+// Close MongoDB connection on process termination
+process.on("SIGINT", async () => {
+    await connectDb.closeDbConnection();
+    process.exit(0);
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running at port ${port}`);
 });
