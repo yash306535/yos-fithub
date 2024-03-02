@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
+    "express-session": "^1.18.0",
     "hbs": "^4.2.0",
     "heroku": "^8.10.0",
     "mongodb": "^6.4.0",
