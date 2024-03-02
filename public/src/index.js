@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+con
 const path = require('path'); // Import the path module
 
 const app = express();
@@ -32,7 +32,7 @@ app.post('/register', async (req, res) => {
   }
 
   // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await .redirect.hash(password, 10);
 
   // Create a new user
   const newUser = new User({

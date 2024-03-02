@@ -13,7 +13,6 @@ const Feedbacks = require('./models/feedback');
 const FitnessPlan = require('./models/trainer_plan'); 
 const session = require('express-session');
 const Purchase = require('./models/purchaseSchema');
-const bcrypt = require('bcrypt');
 const Progress = require('./models/Progress'); // Update with your actual model file name
 
 const multer = require('multer');
@@ -426,7 +425,7 @@ app.post("/login", async (req, res) => {
 
         if (user) {
             // Compare the entered password with the hashed password in the database
-            const isPasswordMatch = await bcrypt.compare(password, user.password);
+            const isPasswordMatch = await compare(password, user.password);
 
             if (isPasswordMatch) {
                 // Passwords match, login successful
@@ -584,7 +583,7 @@ app.post("/index", async (req, res) => {
 
         if (password === confirmpassword) {
             // Hash the password before storing it
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await hash(password, 10);
 
             // Create a new Register document
             const newRegister = new Register({
@@ -671,7 +670,7 @@ app.post("/ll", async (req, res) => {
 
         if (trainer) {
             // Compare the provided password with the hashed password stored in the database
-            const isPasswordMatch = await bcrypt.compare(password, trainer.password);
+            const isPasswordMatch = await compare(password, trainer.password);
 
             if (isPasswordMatch) {
                 const userProfile = await TrainerProfile.findOne({ email: trainer.email_id });
@@ -895,7 +894,7 @@ app.post("/trainer_reg", async (req, res) => {
 
         if (password === confirmpassword) {
             // Hash the password before storing it
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await bhash(password, 10);
 
             // Create a new Register document
             const newRegister = new Trainer_Register({
