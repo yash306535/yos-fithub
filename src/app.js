@@ -39,16 +39,12 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-connect();
 
-process.on('SIGINT', async () => {
-  await close();
-  process.exit();
-});
-
-// Start the Express server
+const { MongoClient } = require('mongodb');
+require('dotenv').config();
+connectDb();
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
 app.get('/', (req, res) => {
     res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
@@ -949,3 +945,17 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });
 
+connectDb.connectDb();
+
+// Your other app configurations and routes go here...
+
+// Close MongoDB connection on process termination
+process.on("SIGINT", async () => {
+    await connectDb.closeDbConnection();
+    process.exit(0);
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running at port ${port}`);
+});
