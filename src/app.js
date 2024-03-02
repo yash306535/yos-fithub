@@ -37,6 +37,8 @@ hbs.registerPartials(partial_path);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 app.get('/', (req, res) => {
     res.render('index2'); // Renders the index2.ejs from the 'templates' folder
   });
@@ -428,7 +430,7 @@ app.post("/login", async (req, res) => {
 
         if (user) {
             // Compare the entered password with the hashed password in the database
-            const isPasswordMatch = await compare(password, user.password);
+            const isPasswordMatch = await bcrypt.compare(password, user.password);
 
             if (isPasswordMatch) {
                 // Passwords match, login successful
@@ -449,19 +451,21 @@ app.post("/login", async (req, res) => {
             } else {
                 // Passwords do not match, login failed
                 console.log("Incorrect password");
-                return res.send('<script>alert("Invalid credentials"); window.location.href = "/login";</script>');
+                return res.json({ success: false, message: "Invalid credentials" });
             }
         } else {
             // User with the provided email does not exist
             console.log("User not found");
-            return res.send('<script>alert("Invalid credentials"); window.location.href = "/login";</script>');
+            return res.json({ success: false, message: "Invalid credentials" });
         }
     } catch (error) {
         console.error(error);
         // Show an alert on the client side for any server error
-        return res.send('<script>alert("Internal Server Error"); window.location.href = "/login";</script>');
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 });
+  
+
 
 
 
@@ -577,46 +581,43 @@ app.get('/show-trainer-to-user/:trainerId', async (req, res) => {
         res.status(500).render('error-page', { message: 'Internal Server Error' });
     }
 });
-
 app.post("/index", async (req, res) => {
-
     try {
-  
         const { email_id, phone_no, password, confirmpassword } = req.body;
 
-        if (password === confirmpassword) {
-            // Hash the password before storing it
-            const hashedPassword = await hash(password, 10);
-
-            // Create a new Register document
-            const newRegister = new Register({
-                email_id: req.body.email_id,
-                phone_no: req.body.phone_no,
-                password: hashedPassword,
-                confirmpassword: req.body.password,
-            });
-
-            // Save the document to the database
-            const registered = await newRegister.save();
-
-            // Check if the registration was successful
-            if (registered) {
-                console.log("User registration done");
-                // Render the index view if registration is successful
-               return res.status(201).render("login");
-            } else {
-                console.log("User registration failed");
-                return res.status(500).send("User registration failed");
-            }
-        } else {
-           return res.status(400).send("Passwords do not match");
+        // Check if the passwords match
+        if (password !== confirmpassword) {
+            return res.status(400).json({ error: "Passwords do not match" });
         }
+
+        // Check if the user already exists
+        const existingUser = await Register.findOne({ email_id });
+        if (existingUser) {
+            return res.status(400).json({ error: "User already exists with this email" });
+        }
+
+        // Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Create a new user
+        const newUser = new Register({
+            email_id,
+            phone_no,
+            password: hashedPassword,
+            confirmpassword: hashedPassword, // You may adjust this according to your requirements
+        });
+
+        // Save the user to the database
+        await newUser.save();
+
+        res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
         console.error(error);
-        
-        return res.status(500).send("Internal Server Error");
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
+  
 
 app.get("/calculator1", (req, res) => {
     res.render("calculator1");
