@@ -36,7 +36,9 @@ hbs.registerPartials(partial_path);
 // Middleware for parsing JSON and urlencoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.get('/', (req, res) => {
+    res.render('index2'); // Renders the index2.ejs from the 'templates' folder
+  });
 app.use(
     session({
         secret: 'yash',
