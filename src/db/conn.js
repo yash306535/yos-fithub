@@ -6,13 +6,12 @@ const URI = "mongodb+srv://yashvant:yash3005@yos-fithub.ra5uf3v.mongodb.net/?ret
 const connectDb = async () => {
   try {
     await mongoose.connect(URI, {
-      // Removed deprecated options:
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
+      // No need for removed options as they are deprecated
     });
     console.log("Connection done");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
+    // Consider adding more specific error handling here for logging or troubleshooting
   }
 };
 

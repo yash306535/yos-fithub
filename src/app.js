@@ -19,7 +19,6 @@ const multer = require('multer');
 const purchaseRoutes = require('./routes/purchase-routes');
 const MongoStore = require('connect-mongo');
 const port = process.env.PORT || 3000;
-const crypto = require('crypto');
 const trainerRoutes = require('./routes/trainer-routes');
 const static_path = path.join(__dirname, "../public");
 app.use(express.static(static_path));
@@ -39,9 +38,11 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
 app.get('/', (req, res) => {
-    res.render('index2'); // Renders the index2.ejs from the 'templates' folder
+    res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
   });
+
 app.use(
     session({
         secret: 'yash',
