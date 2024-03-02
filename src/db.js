@@ -8,6 +8,7 @@ const client = new MongoClient(uri, {
     strict: true,
     deprecationErrors: true,
     tls: true,
+    tlsProtocol: 'TLSv1_2', 
     tlsCAFile: '/path/to/ca.pem',
     tlsAllowInvalidHostnames: true
   }
