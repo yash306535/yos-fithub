@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Fitness Plan</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form container styles */
+        .form-container {
+            padding: 30px;
+        }
+
+        /* Heading styles */
+        h1 {
+            text-align: center;
+            color: #ff4d00;
+            margin-bottom: 30px;
+        }
+
+        /* Label styles */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333333;
+        }
+
+        /* Input and textarea styles */
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:hover,
+        textarea:hover,
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #ff5e00;
+        }
+
+        /* Button styles */
+        button {
+            width: 100%;
+            background-color: #ff5e00;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ec883b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Add Fitness Plan</h1>
+    <div class="form-container">
+        <form id="fitness-plan-form" action="trainer_plan" method="post">
+            <label for="plan-name">Plan Name:</label>
+            <input type="text" id="plan-name" name="name" required>
+
+            <label for="plan-price">Price:</label>
+            <input type="text" id="plan-price" name="price" required>
+
+            <label for="plan-diet">Diet:</label>
+            <textarea id="plan-diet" name="diet" rows="4" required></textarea>
+
+            <label for="plan-exercise">Exercise:</label>
+            <textarea id="plan-exercise" name="exercise" rows="4" required></textarea>
+
+            <label for="plan-duration">Duration:</label>
+            <input type="text" id="duration" name="duration" required>
+
+            <label for="plan-trainer">Trainer Name:</label>
+            <input type="text" id="trainer" name="trainer" readonly required value="<%= trainerName %>" >
+            
+
+            <!-- Additional inputs -->
+            <label for="plan-designed-for">Special Designed For:</label>
+            <input type="text" id="plan-designed-for" name="specialDesignedFor" required>
+
+            <label for="plan-age-group">Age Group:</label>
+            <input type="text" id="plan-age-group" name="ageGroup" required>
+
+            <label for="plan-category">Category:</label>
+            <input type="text" id="plan-category" name="category" required>
+
+            <label for="plan-intensity">Intensity:</label>
+            <input type="text" id="plan-intensity" name="intensity" required>
+
+            <label for="plan-equipment">Required Equipment:</label>
+            <input type="text" id="plan-equipment" name="requiredEquipment" required>
+
+            <label for="plan-target">Target:</label>
+            <input type="text" id="plan-target" name="target" required>
+
+            <label for="plan-difficulty">Difficulty:</label>
+            <input type="text" id="plan-difficulty" name="difficulty" required>
+
+            <label for="plan-frequency">Frequency:</label>
+            <input type="text" id="plan-frequency" name="frequency" required>
+
+            <label for="plan-benefits">Benefits:</label>
+            <textarea id="plan-benefits" name="benefits" rows="4" required></textarea>
+
+            <label for="plan-benefits">Email :</label>
+            <input type="text" id="trainerEmail" name="trainerEmail" readonly required value="<%= trainerEmail %>" >
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

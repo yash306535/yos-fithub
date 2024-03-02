@@ -1,0 +1,146 @@
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+/* Add this CSS for animation */
+@keyframes highlight {
+    from {
+        background-color: #ffe7b3;
+    }
+    to {
+        background-color: #fff;
+    }
+}
+
+/* Add this CSS for the trainer circle */
+.trainer-circle {
+    width: 150px;
+    height: 150px;
+    border: 0.5px solid #000000;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    transition: box-shadow 0.3s ease-in-out;
+    position: relative; /* Add position relative */
+}
+
+
+.found {
+    animation: highlight 1s ease-in-out; /* Change the animation duration or timing function as needed */
+}
+
+.trainers-list-container {
+    background-color: #a39f9f98;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    width:auto;
+    margin-top: 10px;
+    text-align: center;
+    max-height: auto; /* Set a maximum height */
+    position:relative; /* Add position relative */
+    margin-bottom: 2cm;
+}
+
+h2 {
+    color: #333;
+}
+
+.search-bar {
+    position: absolute;
+    top: 10px; /* Adjust top value as needed */
+    right: 10px; /* Adjust right value as needed */
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #fff; /* Search input border color */
+    border-radius: 4px;
+    color: #333; /* Search input text color */
+    background-color: #fff; /* Search input background color */
+}
+
+#searchButton {
+    padding: 8px 12px;
+    border: 1px solid #fff; /* Search button border color */
+    border-radius: 4px;
+    background-color: #333; /* Search button background color */
+    color: #fff; /* Search button text color */
+    cursor: pointer;
+}
+
+.trainers-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* Update this CSS for trainer card */
+.trainer-card {
+    width: calc(25% - 20px);
+    margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    border: 1px solid #ba2323;
+    border-radius: 8px;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative; /* Add this to position the circle */
+}
+
+/* Add this CSS for glow effect on card hover */
+.trainer-card:hover {
+transform: scale(1.1);
+box-shadow: 0 0 20px #ff6800; /* Orange glow color on card hover */
+}
+
+
+
+/* Update this CSS for glow effect on circle hover */
+.trainer-circle:hover {
+    transform: scale(1.1);
+
+box-shadow: 0 0 10px #000000a9; /* Orange glow effect for the circle on circle hover */
+}
+.trainer-circle img {
+    width: 100%; /* Make sure the image takes up 100% of the circle */
+    height: 100%; /* Make sure the image takes up 100% of the circle */
+    object-fit: cover; /* Maintain aspect ratio and cover the circle */
+    border-radius: 50%;
+}
+
+p {
+    color: #333;
+    margin-top: 10px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.select-trainer-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.select-trainer-btn:hover {
+    background-color: #ff4501;
+}

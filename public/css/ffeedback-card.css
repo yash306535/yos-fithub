@@ -1,0 +1,122 @@
+
+body {
+       overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+
+/* Styles for the feedback cards */
+.feedback-slider {
+display: flex;
+overflow-x: hidden;
+transition: transform 0.5s ease;
+margin-bottom: 20px; /* Add some space at the bottom */
+}
+
+.feedback-card {
+flex: 0 0 auto;
+width: 300px; /* Adjust the width as needed */
+margin-right: 10px;
+padding: 20px;
+border-radius: 10px;
+background-color: #f0f0f0;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the navigation buttons */
+#prevButton,
+#nextButton {
+background-color: orangered;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 10px 20px;
+margin-right: 10px;
+cursor: pointer;
+}
+
+/* Hover effect for buttons */
+#prevButton:hover,
+#nextButton:hover {
+background-color: #007bff;
+}
+/* Centering the buttons */
+
+.feed{
+color:black;
+}
+
+
+/* Clearfix to contain floated elements */
+.clearfix::after {
+content: "";
+clear: both;
+display: table;
+}
+/* CSS for golden color stars */
+.fas fa-star {
+color: gold;
+}
+.star {
+color:gold;
+}
+
+.feedback-container {
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+    background-color: #fff;
+    padding: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 0.5cm;
+    
+    border: 2px solid black; /* Added border styling */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.feedback-slider {
+    display: flex;
+    width: 4000%; /* Adjusted width for slideshow effect */
+    transition: transform 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.feedback-card {
+    flex: 0 0 4cm; /* Adjusted width of each card to 4cm */
+    margin: 7px 5px 7px; /* Added margin for better separation */
+    box-sizing: border-box;
+    border: 1px solid #090909;
+    border-radius: 16px;
+    padding: 15px;
+    background-color: #ffffff7a;
+    color: #000000;
+    transition: transform 0.3s ease-in-out;
+}
+
+.feedback-card:hover {
+    transform: scale(1.05); /* Increased size on hover */
+}
+
+button {
+    background-color: #fe4c00;
+    color: #fff;
+    padding: 12px;
+    border: none;
+
+    border-radius: 2cm;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e49979;
+}

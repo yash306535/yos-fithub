@@ -1,0 +1,39 @@
+<!-- views/show-users-buyed-plan.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Users who Bought Plan</title>
+</head>
+<body>
+    <h1>Users who Bought the Plan</h1>
+    
+    <% if (users.length > 0) { %>
+        <ul>
+            <% users.forEach(user => { %>
+                <li>
+                    <p>Name: <%= user.name %></p>
+                    <p>Email: <%= user.email %></p>
+                    <!-- Add other user details you want to display -->
+
+                    <!-- Display all purchased plans for this user -->
+                    <h3>Purchased Plans:</h3>
+                    <ul>
+                        <% user.purchasedPlans.forEach(plan => { %>
+                            <li>
+                                <p>Plan Name: <%= plan.name %></p>
+                                <p>Price: $<%= plan.price %></p>
+                                <!-- Add other plan details you want to display -->
+                            </li>
+                        <% }) %>
+                    </ul>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No users found who bought the plan.</p>
+    <% } %>
+</body>
+</html>

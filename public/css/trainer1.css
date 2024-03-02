@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    margin: 25px;
+    margin-top: 40px;
+    max-width: 95%;
+    background-color: #333;
+    border-radius: 8px;
+    color: white;
+}
+.container1{
+    margin: 10px;
+    padding: 0;
+    background-color: #ffffff;
+    border-radius: 2cm;
+    border: 1px solid #141414;
+
+    width: 97%;
+}
+.trainer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.trainer-card {
+    max-width: 200px;
+    background-color: #fff;
+    border-radius: 1cm;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    margin: 15px;
+    padding: 15px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.trainer-card:hover {
+    transform: scale(1.05);
+    border-color: #ff4d00;
+}
+
+.trainer-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.trainer-card img:hover{
+    transform: scale(1.1);
+    background-color: #ff4d00;
+}
+
+.trainer-card h2 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.trainer-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.trainer-card a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #ff4d00;
+    color: white;
+    text-decoration: none;
+    border-radius: 2cm;
+}
+
+.trainer-card a:hover {
+    background-color: #333;
+}

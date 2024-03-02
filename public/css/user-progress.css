@@ -1,0 +1,49 @@
+/* Add your custom CSS styles here */
+.container1{
+    margin-left: 1cm;
+    margin-right: 1cm;
+    width: 100px;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#progressForm {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#progressForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#progressForm input,
+#progressForm textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+#progressForm button {
+    background-color: #ff4d00;
+    color: white;
+    padding-top: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#progressChart {
+    width: 400px;
+    height: 300px;
+}
+
+
+#progressForm button:hover {
+    background-color: #45a049;
+}

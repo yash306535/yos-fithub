@@ -1,0 +1,86 @@
+
+body{
+    align-items: center;
+}
+
+.lcontainer {
+  background-color: #cacaca6e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  width: 70%;
+  height: 100%;
+  margin-left: 20%;
+  text-align: center; /* Center the text */
+  margin-top: 50px; /* Provide space between the heading and inputs */
+}
+
+h2 {
+  color: #333;
+}
+
+form {
+
+  width: auto;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  
+}
+
+label {
+  color: hsl(0, 0%, 20%);
+  font-weight: bold;
+  margin-left: 30%;
+}
+
+input {
+  width: auto;
+  padding: 10px;
+  margin-left: 0%;
+  border: 1px solid #ba2323;
+  border-radius: 4px;
+  margin-top: 5px; /* Adjust the margin as needed */
+}
+
+button {
+  width: auto;
+  padding: 10px;
+  background-color: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+button:hover {
+  background-color: #0097a7;
+}
+
+p {
+  color: #333;
+  margin-top: 10px;
+}
+
+a {
+  color: #00bcd4;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}

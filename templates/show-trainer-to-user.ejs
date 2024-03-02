@@ -1,0 +1,133 @@
+<!-- show-trainer-to-user.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Profile</title>
+    <link rel="stylesheet" href="css/show-trainer.ejs">
+    <style>
+        /* show-trainer.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container1 {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.profile-container {
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-image {
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    margin-left: 200px;
+    width: 200px;
+    height: 200px;
+}
+
+.details-container {
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+a {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #ff4d00;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #333;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <h1>Trainer Profile</h1>
+        <div class="profile-container">
+            <% if (trainer.profileImage1) { %>
+                <img src="/trainerimg/<%= trainer.profileImage1 %>" alt="Trainer Photo" class="profile-image">
+            <% } else { %>
+                <!-- You can provide a default image if profileImage1 is not available -->
+                <img src="default-profile-image.jpg" alt="Default Photo" class="profile-image">
+            <% } %>
+            <div class="details-container">
+                <label for="trainerName">Trainer Name:</label>
+                <input type="text" id="trainerName" value="<%= trainer.trainerName %>" readonly>
+
+                <label for="trainerEmail">Email:</label>
+                <input type="text" id="trainerEmail" value="<%= trainer.trainerEmail %>" readonly>
+
+                <label for="trainerSpecialization">Specialization:</label>
+                <input type="text" id="trainerSpecialization" value="<%= trainer.trainerSpecialization %>" readonly>
+
+                <label for="trainerExperience">Experience:</label>
+                <input type="text" id="trainerExperience" value="<%= trainer.trainerExperience %>" readonly>
+
+                <label for="trainerCertification">Certification:</label>
+                <input type="text" id="trainerCertification" value="<%= trainer.trainerCertification %>" readonly>
+
+                <label for="trainerPhone">Phone:</label>
+                <input type="text" id="trainerPhone" value="<%= trainer.trainerPhone %>" readonly>
+
+                <label for="trainerLocation">Location:</label>
+                <input type="text" id="trainerLocation" value="<%= trainer.trainerLocation %>" readonly>
+
+                <label for="trainerAvailability">Availability:</label>
+                <input type="text" id="trainerAvailability" value="<%= trainer.trainerAvailability %>" readonly>
+
+                <label for="trainerRate">Rate:</label>
+                <input type="text" id="trainerRate" value="<%= trainer.trainerRate %>" readonly>
+
+                <label for="trainerDescription">Description:</label>
+                <textarea id="trainerDescription" readonly><%= trainer.trainerDescription %></textarea>
+
+                <!-- Add more labels and text boxes for other details -->
+
+                <a href="/trainer1">Back to All Trainers</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!-- buyed_plans.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purchased Plans</title>
+    <!-- Add your CSS styles here -->
+    <style>
+        /* Add your styles for the purchased plans here */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .plan-card {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .name-label {
+            font-weight: bold;
+        }
+
+        .contact-trainer-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>My Purchased Plans</h1>
+    <div class="plans-list-container" id="purchasedPlans">
+        <% if (purchasedPlans.length > 0) { %>
+            <% purchasedPlans.forEach(plan => { %>
+                <div class="plan-card">
+                    <p class="name-label">Name: <%= plan.name %></p>
+                    <p>Price: $<%= plan.price %></p>
+                    <p>Duration: <%= plan.duration %> days</p>
+                    <p>Diet: <%= plan.diet %></p>
+                    <p>Trainer: <%= plan.trainer %></p>
+                    <button class="contact-trainer-btn" data-trainer-email="<%= plan.trainerEmail %>">Contact Trainer</button>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No purchased plans available.</p>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    // Add your JavaScript code here if needed
+</script>
+
+</body>
+</html>

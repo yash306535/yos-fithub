@@ -1,0 +1,104 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styling for calculator container */
+.calculator-container {
+    background-image: url(img/trainer.jpg);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+    border-radius: 4cm;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-color: #000;
+}
+
+/* Styling for calculator cards */
+.calculator-card {
+    background-color: #f86342f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+    width: 30%;
+    text-align: center;
+    max-height: 600px;
+    overflow-y: auto;
+    margin: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover effect on calculator cards */
+.calculator-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #FFA500; /* Orange glow color on hover */
+}
+
+/* Styling for labels */
+label {
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Styling for input and select boxes */
+input, select {
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #333;
+    border-radius: 3cm; /* Rounded corners */
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Input and select box focus effect */
+input:focus, select:focus {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Styling for buttons */
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 12px; /* Rounded corners */
+    font-weight: bold;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #FFA500;
+    color: #000;
+}
+
+/* Styling for result paragraph */
+#result {
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Animation for fadeIn */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+h2 {
+    color: #333;
+}

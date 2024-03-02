@@ -1,0 +1,47 @@
+<!-- views/progress-tracking.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Progress Tracking</title>
+    <link rel="stylesheet" href="css/progress-tracking.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fitness Progress Tracking</h1>
+
+        <form id="progressForm" action="/save-progress" method="POST">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="caloriesBurned">Calories Burned (kg/lbs):</label>
+            <input type="number" id="caloriesBurned" name="caloriesBurned">
+
+            <label for="fatLossGain">Fat Loss(kg) :</label>
+            <input type="number" id="fatLossGain" name="fatLossGain">
+
+            <label for="fatLossGain">Fat gain (kg) :</label>
+            <input type="number" id="fatLossGain" name="fatLossGain">
+
+            <label for="weightChange">Weight Change (kg):</label>
+            <input type="number" id="weightChange" name="weightChange">
+
+            <label for="dailyActivity">Daily Activity Level (Scale: 1-10):</label>
+            <input type="number" id="dailyActivity" name="dailyActivity" min="1" max="10" required>
+
+            <label for="weeklyProgress">Weekly Progress Summary:</label>
+            <textarea id="weeklyProgress" name="weeklyProgress" rows="4"></textarea>
+
+            <button type="submit">Submit Progress</button>
+        </form>
+    </div>
+
+    <script src="/scripts.js">
+        
+    </script> <!-- Link to your JavaScript file -->
+
+</body>
+</html>
