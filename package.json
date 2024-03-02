@@ -5,8 +5,9 @@
   "main": "index2.ejs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js -e js,hbs"
-  },
+    "start": "node src/app.js"
+  }
+  ,
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "hbs": "^4.2.0",
     "heroku": "^8.10.0",
     "mongodb": "^6.4.0",
-    "mongoose": "^6.10.1"
+    "mongoose": "^6.10.1",
+    "nodemon": "^3.1.0"
   }
 }
