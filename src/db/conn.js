@@ -1,28 +1,23 @@
+const mongoose = require("mongoose");
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://yashvant:yash3005@yos-fithub.ra5uf3v.mongodb.net/?retryWrites=true&w=majority&appName=yos-fithub";
+// Replace with your MongoDB Cloud URI
+const URI = "mongodb+srv://yashvant:yash3005@yos-fithub.ra5uf3v.mongodb.net/?retryWrites=true&w=majority&appName=yos-fithub";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    tls: true,
-    tlsCAFile: '/path/to/ca.pem',
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
+const connectDb = async () => {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    await mongoose.connect(URI, {
+      // No need for removed options as they are deprecated
+    });
+    console.log("Connection done");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error.message);
+    // Consider adding more specific error handling here for logging or troubleshooting
   }
-}
-run().catch(console.dir);
+};
+
+const closeDbConnection = async () => {
+  await mongoose.connection.close();
+  console.log("Connection closed");
+};
+
+module.exports = { connectDb, closeDbConnection };

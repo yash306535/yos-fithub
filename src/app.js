@@ -4,7 +4,6 @@ const path = require("path");
 const hbs = require("hbs");
 const router = express.Router();
 const connectDb = require("./db/conn");
-const { connect, close } = require('./db');
 
 const Register = require('./models/registers');
 const Trainer_Register = require('./models/Trainer_register');
@@ -19,7 +18,7 @@ const Progress = require('./models/Progress'); // Update with your actual model 
 const multer = require('multer');
 const purchaseRoutes = require('./routes/purchase-routes');
 const MongoStore = require('connect-mongo');
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 const trainerRoutes = require('./routes/trainer-routes');
 const static_path = path.join(__dirname, "../public");
 app.use(express.static(static_path));
@@ -40,12 +39,6 @@ app.set('views', path.join(__dirname, '../templates'));
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
-connectDb();
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
 app.get('/', (req, res) => {
     res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
   });
