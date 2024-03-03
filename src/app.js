@@ -53,6 +53,7 @@ app.use(
     })
 );
 
+
 // const Razorpay = require('razorpay');
 // const razorpay = new Razorpay({
 //     key_id: 'YOUR_RAZORPAY_KEY_ID',
@@ -103,25 +104,22 @@ app.get('/show-users-buyed-plan', async (req, res) => {
 });
 app.post('/buy-plan', async (req, res) => {
     try {
-        const userEmail = req.session.email;
+        const userEmail = req.session.userEmail; // Assuming the user's email is stored in the session
         const planId = req.body.planId;
-        const trainerEmail = req.body.trainerEmail; // Retrieve trainer's email from the request body
+        const trainerEmail = req.body.trainerEmail;
 
-        // Find the user based on the email
         const user = await Profile.findOne({ email: userEmail });
-
+        
         if (!user) {
             return res.status(404).send('User not found');
         }
 
-        // Assuming you have a FitnessPlan model for your plans
         const plan = await FitnessPlan.findById(planId);
 
         if (!plan) {
             return res.status(404).send('Plan not found');
         }
 
-        // Save the purchase details in user's profile
         user.purchasedPlans.push({
             planId: plan._id,
             trainerEmail,
@@ -129,8 +127,7 @@ app.post('/buy-plan', async (req, res) => {
 
         await user.save();
 
-        // Save the purchase details in trainer's profile
-        const trainer = await TrainerProfile.findOne({ trainerEmail });
+        const trainer = await TrainerProfile.findOne({ email: trainerEmail });
 
         if (trainer) {
             trainer.purchasedUsers.push({
