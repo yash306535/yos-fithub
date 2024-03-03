@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const progressSchema = new mongoose.Schema({
-    userEmail: { type: String, required: true }, // Assuming you have a user's email associated with the progress
+    userEmail: { type: String, }, // Assuming you have a user's email associated with the progress
     date: { type: Date, required: true },
     caloriesBurned: { type: Number },
     fatLoss: { type: Number },

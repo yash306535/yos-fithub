@@ -7,14 +7,13 @@
     <meta name="keywords" content="Gym, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>YOS Fithub | User Feedback</title>
+    <title>YOS Fithub | UserDashboard</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/flaticon.css" type="text/css">
@@ -22,36 +21,9 @@
     <link rel="stylesheet" href="css/barfiller.css" type="text/css">
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/feedback.css" >
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <style>
-            /* CSS for star rating */
-    .rating {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .rating input {
-      display: none;
-    }
-    
-    .rating label {
-      cursor: pointer;
-      padding: 5px;
-      font-size: 24px;
-    }
-    
-    .rating label:before {
-      content: "\2605"; /* Unicode character for star */
-      color: #ccc;
-    }
-    
-    .rating input:checked ~ label:before {
-      color: #ffcc00; /* Yellow color for filled star */
-    }
-        </style>
+    <link rel="stylesheet" href="css/feedback.css" type="text/css">
+
 </head>
 
 <body onload="display()">
@@ -71,22 +43,34 @@
         </div>
         <nav class="canvas-menu mobile-menu">
             <ul>
-                <li><a href="/index2">Home</a></li>
-                <li><a href="/about-us">About Us</a></li>
-                <li><a href="/classes">Classes</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/team">Our Team</a></li>
-                <li><a href="#">Pages</a>
+                <li><a href="/userDashboard">Home</a></li>
+
+                <li><a href="#">Account</a>
                     <ul class="dropdown">
+                        <!-- <li><a href="/user-profile">set User Profile</a></li> -->
+                        <li><a href="/show-user-profile">Show User Profile</a></li>
+                        <li><a href="/index2">Logout</a></li>
+                        
+                        <li id="log"><a href="/alogin" >Admin Login</a></li>
+                        
+                    </ul>
+                </li>
+
+                <li><a href="/trainer1">Trainers</a></li>
+                <li><a href="/team">Our Team</a></li>                           
+                <li><a href="./plans">Plans</a></li>
+                <li><a href="#">Services</a>
+                    <ul class="dropdown">
+                        <li><a href="./buyed-plans-user"> buyed Plans</a></li>
+                        <li><a href="/calculator1">Health Calculators</a></li>
+                        <li><a href="/feedback1">Feedback</a></li>
                         <li><a href="/about-us">About us</a></li>
-                        <li><a href="/class-timetable">Classes timetable</a></li>
-                        <li><a href="/bmi-calculator">Bmi calculate</a></li>
-                        <li><a href="/team">Our team</a></li>
-                        <li><a href="/gallery">Gallery</a></li>
-                        <li><a href="/blog">Our blog</a></li>
+
                     </ul>
                 </li>
                 <li><a href="/contact">Contact</a></li>
+
+                <li><a href="/about-us">About Us</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -106,10 +90,10 @@
             <div class="col-lg-3">
                 <div class="logo">
                     <a href="/index2">
-                        <img src="img/logo.png" alt="" style="	width: 100px;
-	                                                            height: 100px;
-                                                                margin-top: -35px;
-                                                                margin-left: 250px;
+                        <img src="img/logo.png" alt="" style="	width: 120px;
+                        height: 120px;
+                        margin-top: 5px;
+                        margin-left: 200px;
                                                                 ">
                     </a>
                 </div>
@@ -121,8 +105,11 @@
 
                         <li><a href="#">Account</a>
                             <ul class="dropdown">
-                                <li><a href="/login">User Profile</a></li>
+                                <!-- <li><a href="/user-profile">set User Profile</a></li> -->
+                                <li><a href="/show-user-profile">Show User Profile</a></li>
                                 <li><a href="/index2">Logout</a></li>
+                                
+                                <li id="log"><a href="/alogin" >Admin Login</a></li>
                                 
                             </ul>
                         </li>
@@ -130,14 +117,13 @@
                         <li><a href="/trainer1">Trainers</a></li>
                         <li><a href="/team">Our Team</a></li>                           
                         <li><a href="./plans">Plans</a></li>
-
                         <li><a href="#">Services</a>
                             <ul class="dropdown">
-                                <li><a href="/about-us">About us</a></li>
-                                <li><a href="/class-timetable">Classes timetable</a></li>
+                                <li><a href="./buyed-plans-user"> buyed Plans</a></li>
                                 <li><a href="/calculator1">Health Calculators</a></li>
-                                <li><a href="/team">Our team</a></li>
                                 <li><a href="/feedback1">Feedback</a></li>
+                                <li><a href="/about-us">About us</a></li>
+
                             </ul>
                         </li>
                         <li><a href="/contact">Contact</a></li>
@@ -145,9 +131,11 @@
                         <li><a href="/about-us">About Us</a></li>
                     </ul>
                 </nav>
-            </div>
+            </div>   
             <div class="col-lg-3">
                 <div class="top-option">
+                   
+                    
                     <div class="to-search search-switch">
                         <i class="fa fa-search"></i>
                     </div>
@@ -168,20 +156,7 @@
     </div>
 </header>
 <!-- Header End -->
-
-
-    <!-- Hero Section Begin -->
-    <section class="hero-section">
-        <div class="hs-slider owl-carousel">
-            <div class="hs-item set-bg" data-setbg="img/hero/hero-1.jpg" style="height: fit-content;">
-                
-            </div>
-           
-        </div>
-    </section>
-    <!-- Hero Section End -->
-
-   <div class="feedback-container">
+<div class="feedback-container">
     <h1>Feedback Form</h1>
     <form action="#" method="post">
         <div class="form-group">
@@ -236,25 +211,27 @@
             <textarea id="comments" name="feedback" rows="5"></textarea>
         </div>
 
-              <label for="rating">Rating:</label>
-      <div class="rating" id="rating">
-        <input type="radio" id="star5" name="rating" value="5">
-        <label for="star5" title="5 stars"></label>
-        <input type="radio" id="star4" name="rating" value="4">
-        <label for="star4" title="4 stars"></label>
-        <input type="radio" id="star3" name="rating" value="3">
-        <label for="star3" title="3 stars"></label>
-        <input type="radio" id="star2" name="rating" value="2">
-        <label for="star2" title="2 stars"></label>
-        <input type="radio" id="star1" name="rating" value="1">
-        <label for="star1" title="1 star"></label>
-      </div>
+        <label for="rating">Rating:</label>
+
+        <div class="rating" id="rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5" title="5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" title="4 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" title="3 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" title="2 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" title="1 star"></label>
+        </div>
 
         <div class="form-group">
             <button type="submit">Submit Feedback</button>
         </div>
     </form>
 </div>
+    <!-- Team Section Begin -->
     <section class="team-section spad">
         <div class="container">
             <div class="row">
@@ -262,9 +239,9 @@
                     <div class="team-title">
                         <div class="section-title">
                             <span>Our Team</span>
-                            <h2>TRAIN WITH EXPERTS</h2>
+                            <!-- <h2>TRAIN WITH EXPERTS</h2> -->
                         </div>
-                        <a href="#" class="primary-btn btn-normal appoinment-btn">appointment</a>
+                        <!-- <a href="#" class="primary-btn btn-normal appoinment-btn">appointment</a> -->
                     </div>
                 </div>
             </div>
@@ -273,51 +250,36 @@
                     <div class="col-lg-4">
                         <div class="ts-item set-bg" data-setbg="img/team/team-1.jpg">
                             <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
+                                <h4>Yashvant Mane </h4>
+                                <span>Owner YOS Fithub</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="ts-item set-bg" data-setbg="img/team/team-2.jpg">
                             <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
+                                <h4>Yash Pakale</h4>
+                                <span>Co-Founder YOS Fithub</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="ts-item set-bg" data-setbg="img/team/team-3.jpg">
                             <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
+                                <h4>Shubham Bhosale</h4>
+                                <span>Managing Director</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="ts-item set-bg" data-setbg="img/team/team-4.jpg">
                             <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
+                                <h4>Omkar Kumbhar</h4>
+                                <span>Operational Director</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-5.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-6.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -389,8 +351,8 @@
                     <div class="fs-widget">
                         <h4>Support</h4>
                         <ul>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">My account</a></li>
+                            <li><a href="/index2">Logout</a></li>
+                            <li><a href="/show-user-profile">My account</a></li>
                             <li><a href="#">Subscribe</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
@@ -420,7 +382,7 @@
                 <div class="col-lg-12 text-center">
                     <div class="copyright-text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | YOS Fithub Community <i class="fa font-family" aria-hidden="true"></i></a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
                 </div>
@@ -449,7 +411,7 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
-
+   
 <script language ="javascript" type="text/javascript">
 function display()
 {
@@ -464,11 +426,9 @@ function display()
     // Retrieve and log the updated text
     var updatedUsername = usernameElement.innerHTML;
     console.log('Username:', updatedUsername);
-  
-
-
-
 }
+
+
  const currentPort = window.location.port;
         
         if (currentPort !== '4000') {
@@ -477,7 +437,29 @@ function display()
             logElement.style.display = 'none';
         }
 </script>
-
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyByo-y7JgD3KAHxe08y22SdoLMKVKrkYbI",
+      authDomain: "yos-fithub.firebaseapp.com",
+      projectId: "yos-fithub",
+      storageBucket: "yos-fithub.appspot.com",
+      messagingSenderId: "164748123569",
+      appId: "1:164748123569:web:1d537542679e841fb53190",
+      measurementId: "G-6XHVH3DC08"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </body>
 
 </html>

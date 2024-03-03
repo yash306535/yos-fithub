@@ -202,6 +202,11 @@ app.post('/trainer_plan', async (req, res) => {
             trainerEmail
         } = req.body;
 
+        // Validate if all required fields are provided
+        if (!name || !price || !duration || !trainer || !trainerEmail) {
+            return res.status(400).json({ message: 'Please provide all required fields' });
+        }
+
         // Create a new instance of the FitnessPlan model
         const newFitnessPlan = new FitnessPlan({
             name,
@@ -222,7 +227,6 @@ app.post('/trainer_plan', async (req, res) => {
             trainerEmail
         });
 
-        // Save the new fitness plan to the database
         await newFitnessPlan.save();
 
         // Redirect to trainerDashboard upon successful addition
@@ -271,7 +275,7 @@ app.post('/save-progress', async (req, res) => {
         } = req.body;
 
         const progress = new Progress({
-            userEmail,
+            userEmail:userEmail,
             date,
             caloriesBurned,
             fatLoss,
@@ -304,8 +308,6 @@ app.get('/user-progress-data', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
 app.get("/progress-tracking", (req, res) => { 
     res.render("progress-tracking");
 });
@@ -353,8 +355,6 @@ app.get('/buyed-plans', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 app.get("/trainerdashboard", (req, res) => {
     res.render("trainerdashboard");
 });
@@ -660,14 +660,14 @@ app.post("/ll", async (req, res) => {
             const isPasswordMatch = await bcrypt.compare(password, trainer.password);
 
             if (isPasswordMatch) {
-                const userProfile = await TrainerProfile.findOne({ email: trainer.email_id });
+                const trainer = await Trainer_Register.findOne({ email_id: email_id });
                 // Set session variables for authenticated trainer
                 req.session.trainerEmail = trainer.email_id;
                 req.session.trainerName = trainer.name;
                 req.session.trainerPhone = trainer.phone_no;
 
                 // Check if trainer profile is set
-                if (userProfile) {
+                if (!trainer) {
                     // Redirect to the trainer-profile page to set up the profile
                     return res.redirect("/trainer-profile");
                 }
@@ -786,8 +786,9 @@ app.post('/save-profile', upload.single('profileImage'), async (req, res) => {
     }
 });
 
-app.get("/feedback1", (req, res) => {
+app.get("/feedback1", async (req, res) => {
     res.render("feedback1");
+
 });
 app.get('/feedbacks', async (req, res) => {
     try {
