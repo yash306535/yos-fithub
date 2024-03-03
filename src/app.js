@@ -339,9 +339,9 @@ app.get("/userDashboard", async(req, res) => {
 
         if (userProfile) {
             // Render the userdashboard.ejs template and pass the user's profile
-            return res.render('userdashboard', { userProfile });
+            return res.render('userDashboard', { userProfile });
         } else {
-            return res.render('userdashboard', { userProfile });
+            return res.render('userDashboard', { userProfile });
         }
     } catch (error) {
         console.error(error);
