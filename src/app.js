@@ -109,7 +109,7 @@ app.post('/buy-plan', async (req, res) => {
         const trainerEmail = req.body.trainerEmail;
 
         const user = await Profile.findOne({ email: userEmail });
-        
+
         if (!user) {
             return res.status(404).send('User not found');
         }
@@ -120,6 +120,10 @@ app.post('/buy-plan', async (req, res) => {
             return res.status(404).send('Plan not found');
         }
 
+        if (user.purchasedPlans.some(purchasedPlan => purchasedPlan.planId.equals(plan._id))) {
+            // User has already purchased the plan
+            return res.status(400).send('You have already purchased this plan');
+        }
         user.purchasedPlans.push({
             planId: plan._id,
             trainerEmail,
@@ -147,12 +151,10 @@ app.post('/buy-plan', async (req, res) => {
 
 
 
-// Assuming you have a session variable 'email' set during user login
-
 app.get('/buyed-plans-user', async (req, res) => {
     try {
         // Fetch user's email from the session
-        const userEmail = req.session.email;
+        const userEmail = req.session.userEmail;
 
         // Find the user based on the email
         const user = await Profile.findOne({ email: userEmail });
@@ -162,15 +164,18 @@ app.get('/buyed-plans-user', async (req, res) => {
         }
 
         // Fetch purchased plans for the user
-        const purchasedPlans = await FitnessPlan.find({ _id: { $in: user.purchasedPlans.map(plan => plan.planId) } });
+        const purchasedPlanIds = user.purchasedPlans.map(plan => plan.planId);
+        
+        const purchasedPlans = await FitnessPlan.find({ _id: { $in: purchasedPlanIds } });
 
-        // Render the buyed-plans-user.ejs template and pass purchased plans as data
-        res.render('buyed-plans-user', { purchasedPlans,userEmail });
+        // Render the 'buyed-plans' template and pass purchased plans as data
+        res.render('buyed-plans-user', { purchasedPlans, userEmail });
     } catch (error) {
         console.error('Error fetching or processing purchased plans:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 // Mount the router at a specific base path (e.g., /user)
 app.use('/user', router);
 //fitness plan 
