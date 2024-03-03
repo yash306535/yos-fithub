@@ -71,15 +71,6 @@ app.get('/plans', async (req, res) => {
         res.status(500).send('Failed to fetch plans from the database');
     }
 });
-
-
-
-// Assuming you have a session variable trainerEmail set during trainer login
-
-// Assuming you have a session variable 'trainerEmail' set during trainer login
-
-// Assuming you have a session variable trainerEmail set during trainer login
-
 app.get('/show-users-buyed-plan', async (req, res) => {
     try {
         const trainerEmail = req.session.trainerEmail;
@@ -110,14 +101,6 @@ app.get('/show-users-buyed-plan', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
-// Other routes and app configurations
-
-// Assuming you have a session variable for user email set during login
 app.post('/buy-plan', async (req, res) => {
     try {
         const userEmail = req.session.email;
@@ -191,11 +174,6 @@ app.get('/buyed-plans-user', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
 // Mount the router at a specific base path (e.g., /user)
 app.use('/user', router);
 //fitness plan 
@@ -792,7 +770,7 @@ app.post('/save-profile', upload.single('profileImage'), async (req, res) => {
 
         await userProfile.save();
 
-        return res.status(201).send('User profile saved successfully');
+        return res.status(201).render('userDashboard');
     } catch (error) {
         if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
             // Duplicate email error
