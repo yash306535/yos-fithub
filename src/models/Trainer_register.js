@@ -17,11 +17,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    experience: {
-        type: Number, // Assuming experience is represented as a number of years
-        required: true,
-    },
-     
+         
     password: {
         type: String,
         required: true,

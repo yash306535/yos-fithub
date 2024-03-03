@@ -872,7 +872,7 @@ app.post("/trainer_reg", async (req, res) => {
     
     try {
   
-        const { name,email_id, phone_no,experience,certificates, password, confirmpassword } = req.body;
+        const { name,email_id, phone_no,password, confirmpassword } = req.body;
 
         if (password === confirmpassword) {
             // Hash the password before storing it
@@ -883,8 +883,6 @@ app.post("/trainer_reg", async (req, res) => {
                 name:req.body.name,
                 email_id: req.body.email_id,
                 phone_no: req.body.phone_no,
-                experience:req.body.experience,
-    
                 password: hashedPassword,
                 confirmpassword: req.body.password,
             });
@@ -894,7 +892,6 @@ app.post("/trainer_reg", async (req, res) => {
 
             // Check if the registration was successful
             if (registered) {
-                console.log("Trainer registration done");
                 // Render the index view if registration is successful
                return res.status(201).render("ll");
             } else {

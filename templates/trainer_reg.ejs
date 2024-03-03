@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V1</title>
+	<title>Trainer Registration</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -40,7 +40,7 @@
 						<input class="input100" type="text" id="name" name="name" placeholder="Name">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-social" aria-hidden="true"></i>
 						</span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -58,8 +58,6 @@
 						</span>
 					</div>
        
-        <input type="number"  class="input100"id="experience" name="experience"  placeholder="Experience (in years)"><br>
-
         
        
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
@@ -126,28 +124,6 @@ function display()
     document.addEventListener('contextmenu',event=>event.preventDefault());
 }
 </script>
-<script type="module">
-	// Import the functions you need from the SDKs you need
-	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-	import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-	// TODO: Add SDKs for Firebase products that you want to use
-	// https://firebase.google.com/docs/web/setup#available-libraries
-  
-	// Your web app's Firebase configuration
-	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-	const firebaseConfig = {
-	  apiKey: "AIzaSyByo-y7JgD3KAHxe08y22SdoLMKVKrkYbI",
-	  authDomain: "yos-fithub.firebaseapp.com",
-	  projectId: "yos-fithub",
-	  storageBucket: "yos-fithub.appspot.com",
-	  messagingSenderId: "164748123569",
-	  appId: "1:164748123569:web:1d537542679e841fb53190",
-	  measurementId: "G-6XHVH3DC08"
-	};
-  
-	// Initialize Firebase
-	const app = initializeApp(firebaseConfig);
-	const analytics = getAnalytics(app);
-  </script>
+
 </body>
 </html>
