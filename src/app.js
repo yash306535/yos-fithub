@@ -675,7 +675,7 @@ app.post("/ll", async (req, res) => {
 
         if (trainer) {
             // Compare the provided password with the hashed password stored in the database
-            const isPasswordMatch = await compare(password, trainer.password);
+            const isPasswordMatch = await bcrypt.compare(password, trainer.password);
 
             if (isPasswordMatch) {
                 const userProfile = await TrainerProfile.findOne({ email: trainer.email_id });
@@ -683,7 +683,6 @@ app.post("/ll", async (req, res) => {
                 req.session.trainerEmail = trainer.email_id;
                 req.session.trainerName = trainer.name;
                 req.session.trainerPhone = trainer.phone_no;
-                console.log("Trainer Login successful");
 
                 // Check if trainer profile is set
                 if (userProfile) {
@@ -899,7 +898,7 @@ app.post("/trainer_reg", async (req, res) => {
 
         if (password === confirmpassword) {
             // Hash the password before storing it
-            const hashedPassword = await bhash(password, 10);
+            const hashedPassword = await bcrypt.hash(password, 10);
 
             // Create a new Register document
             const newRegister = new Trainer_Register({
