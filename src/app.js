@@ -122,8 +122,9 @@ app.post('/buy-plan', async (req, res) => {
 
         if (user.purchasedPlans.some(purchasedPlan => purchasedPlan.planId.equals(plan._id))) {
             // User has already purchased the plan
-            return res.status(400).send('You have already purchased this plan');
+            return res.status(400).json({ warning: 'You have already purchased this plan you cant buy same plan again' });
         }
+
         user.purchasedPlans.push({
             planId: plan._id,
             trainerEmail,
@@ -142,12 +143,13 @@ app.post('/buy-plan', async (req, res) => {
             await trainer.save();
         }
 
-        res.status(200).send('Plan purchased successfully');
+        res.status(200).json({ success: true, message: 'Plan purchased successfully' });
     } catch (error) {
         console.error('Error processing plan purchase:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 
 

@@ -324,7 +324,7 @@
             });
         }
     </script> 
-   <script>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
         const buyPlanButtons = document.querySelectorAll('.buy-plan-btn');
 
@@ -344,10 +344,17 @@
                         body: JSON.stringify({ planId, trainerEmail }), // Include trainer's email in the request
                     });
 
+                    const data = await response.json();
+
                     if (response.ok) {
-                        console.log('Plan purchased successfully');
+                        // Plan purchased successfully
+                        alert('Plan purchased successfully');
                         // Optionally, you can redirect or update UI here
+                    } else if (data.warning) {
+                        // User has already purchased the plan
+                        alert(data.warning);
                     } else {
+                        // Failed to purchase plan
                         console.error('Failed to purchase plan');
                     }
                 } catch (error) {
@@ -357,6 +364,8 @@
         });
     });
 </script>
+
+
 
     
     
