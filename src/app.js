@@ -391,7 +391,7 @@ app.get('/show-trainer-profile', async (req, res) => {
 
         if (trainerProfile) {
             // Render the trainer profile page with the profile data
-            return res.render('show-trainer-Profile', { trainerProfile });
+            return res.render('show-trainer-profile', { trainerProfile });
         } else {
             // Trainer profile not found
             return res.status(404).send('Trainer profile not found');
