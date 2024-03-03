@@ -1,5 +1,3 @@
-
-
 .u-container {
     align-items: center;
     justify-content: center;
@@ -11,14 +9,14 @@
     border-radius: 1cm;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-left: 13cm;
+    margin-left: auto;
+    margin-right: auto; /* Center the container */
 }
-
 
 .profile-image {
     border-radius: 50%;
     overflow: hidden;
-    margin: 10px 4cm 10px;
+    margin: 10px auto; /* Center the image horizontally and add margin */
     width: 200px;
     height: 200px;
     position: relative;
@@ -35,6 +33,7 @@
     width: 220px; /* Increase the size on hover */
     height: 220px;
 }
+
 .profile-image:hover::after {
     content: attr(data-username);
     position: absolute;
@@ -63,4 +62,18 @@
     box-sizing: border-box;
     border-radius: 4px;
     pointer-events: none; /* Make input non-editable */
+}
+
+/* Media Queries for responsiveness */
+
+@media only screen and (max-width: 768px) {
+    .u-container {
+        max-width: 80%; /* Adjust the max-width for smaller screens */
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .profile-image {
+        margin: 10px auto; /* Center the image and add margin for smaller screens */
+    }
 }

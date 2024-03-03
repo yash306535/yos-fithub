@@ -1,13 +1,10 @@
 /* Add your custom CSS styles here */
-.container1{
+
+.container1 {
     margin-left: 1cm;
     margin-right: 1cm;
-    width: 100px;
-    align-items: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-#progressForm {
-    max-width: 600px;
+    width: 100%;
+    max-width: 600px; /* Adjust the max-width as needed for responsiveness */
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -31,7 +28,6 @@
 #progressForm button {
     background-color: #ff4d00;
     color: white;
-    padding-top: 5px;
     padding: 10px 15px;
     border: none;
     border-radius: 3px;
@@ -39,11 +35,28 @@
 }
 
 #progressChart {
-    width: 400px;
+    width: 100%; /* Adjusted to full width for responsiveness */
     height: 300px;
 }
 
-
 #progressForm button:hover {
     background-color: #45a049;
+}
+
+@media only screen and (max-width: 1200px) {
+    .container1 {
+        max-width: 80%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .container1 {
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .container1 {
+        max-width: 100%;
+    }
 }

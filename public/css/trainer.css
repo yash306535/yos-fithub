@@ -144,3 +144,26 @@ p {
 .select-trainer-btn:hover {
     background-color: #ff4501;
 }
+
+@media only screen and (max-width: 1200px) {
+    .trainer-card {
+        max-width: calc(33.33% - 30px);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .trainer-container {
+        padding: 10px;
+    }
+
+    .trainer-card {
+        max-width: calc(50% - 30px);
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .trainer-card {
+        max-width: 100%;
+    }
+}
+

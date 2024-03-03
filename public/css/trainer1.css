@@ -12,15 +12,16 @@ h1 {
     border-radius: 8px;
     color: white;
 }
-.container1{
+
+.container1 {
     margin: 10px;
     padding: 0;
     background-color: #ffffff;
     border-radius: 2cm;
     border: 1px solid #141414;
-
     width: 97%;
 }
+
 .trainer-container {
     display: flex;
     flex-wrap: wrap;
@@ -49,7 +50,8 @@ h1 {
     height: 150px;
     border-radius: 50%;
 }
-.trainer-card img:hover{
+
+.trainer-card img:hover {
     transform: scale(1.1);
     background-color: #ff4d00;
 }
@@ -78,4 +80,28 @@ h1 {
 
 .trainer-card a:hover {
     background-color: #333;
+}
+
+/* Media Queries for Responsive Design */
+
+@media only screen and (max-width: 1200px) {
+    .trainer-card {
+        max-width: calc(33.33% - 30px);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .trainer-container {
+        padding: 10px;
+    }
+
+    .trainer-card {
+        max-width: calc(50% - 30px);
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .trainer-card {
+        max-width: 100%;
+    }
 }

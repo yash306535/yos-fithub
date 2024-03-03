@@ -1,57 +1,93 @@
+.container1 {
+    margin: 40px;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
 
-        .container1 {
-            margin: 40px;
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .heading{
-            margin-bottom: 40px;
-            
-        }
+.heading {
+    margin-bottom: 40px;
+}
 
-        .user-card {
-            border: 1px solid #000000;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
+.user-card {
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
 
-        .user-card h3 {
-            margin-bottom: 10px;
-        }
+.user-card h3 {
+    margin-bottom: 10px;
+}
 
-        .purchased-plans {
-            list-style-type: none;
-            padding: 0;
-        }
+.purchased-plans {
+    list-style-type: none;
+    padding: 0;
+}
 
-        .plan-card {
-            background-color: #ffffff;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #5b5b5b;
-            border-radius: 6px;
-        }
+.plan-card {
+    background-color: #ffffff;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #5b5b5b;
+    border-radius: 6px;
+}
 
-        .contact-user-btn {
-            margin: 40px;
-            background-color: #ff4d00;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 2cm;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        
-        .contact-user-btn:hover {
-            background-color: #ff793f;
-            transform: scale(1.1);
-        }
-        
-   
+.contact-user-btn {
+    margin: 40px;
+    background-color: #ff4d00;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 2cm;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-user-btn:hover {
+    background-color: #ff793f;
+    transform: scale(1.1);
+}
+
+/* Media Queries for responsiveness */
+
+@media only screen and (max-width: 1200px) {
+    .container1 {
+        margin: 20px;
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .container1 {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .user-card {
+        padding: 8px;
+    }
+
+    .heading {
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .container1 {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .user-card {
+        padding: 6px;
+    }
+
+    .heading {
+        margin-bottom: 10px;
+    }
+}
