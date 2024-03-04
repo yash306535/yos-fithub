@@ -12,6 +12,7 @@
 
     <div class="container">
         <h1>Fitness Progress Tracking</h1>
+        
 
         <form id="progressForm" action="/save-progress" method="POST">
             <label for="date">Date:</label>
@@ -39,8 +40,13 @@
         </form>
     </div>
 
-    <script src="/scripts.js">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMessage = urlParams.get('success');
         
+        if (successMessage) {
+            alert(successMessage);
+        }
     </script> <!-- Link to your JavaScript file -->
 
 </body>

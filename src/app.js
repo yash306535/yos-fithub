@@ -286,7 +286,7 @@ app.post('/save-progress', async (req, res) => {
         });
 
         await progress.save();
-        res.render('progress-tracking', { success: 'Progress saved successfully' });
+        res.redirect('/progress-tracking?success=Progress saved successfully');
 
     } catch (error) {
         console.error('Error saving progress:', error);
