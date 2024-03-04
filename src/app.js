@@ -660,14 +660,14 @@ app.post("/ll", async (req, res) => {
             const isPasswordMatch = await bcrypt.compare(password, trainer.password);
 
             if (isPasswordMatch) {
-                const trainer = await Trainer_Register.findOne({ email_id: email_id });
+                const trainer1 = await Trainer_Register.findOne({ email_id: email_id });
                 // Set session variables for authenticated trainer
                 req.session.trainerEmail = trainer.email_id;
                 req.session.trainerName = trainer.name;
                 req.session.trainerPhone = trainer.phone_no;
 
                 // Check if trainer profile is set
-                if (!trainer) {
+                if (!trainer1) {
                     // Redirect to the trainer-profile page to set up the profile
                     return res.redirect("/trainer-profile");
                 }
