@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Gym Template">
+    <meta name="keywords" content="Gym, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gym | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/barfiller.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/plan.css" type="text/css">
+    
+</head>
+
+<body onload="display()">
+
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Section Begin -->
+    <%- include('u_header') %>
+
+<section class="hero-section">
+    <div class="hs-slider owl-carousel">
+        <div class="hs-item set-bg" data-setbg="img/hero/hero-1.jpg" style="height: fit-content;">
+            
+        </div>
+       
+    </div>
+</section>
+  
+<%- include('teams') %>
+
+    
+    
+    <!-- Footer Section Begin -->
+    <%- include('footer') %>
+
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/jquery.barfiller.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script> 
+    <script>
+        function sortPlansByAge() {
+            var selectElement = document.getElementById("sortSelect");
+            var selectedOption = selectElement.options[selectElement.selectedIndex].value;
+    
+            var plansList = document.getElementById("plansList");
+            var planCards = plansList.getElementsByClassName("plan-card");
+    
+            var sortedPlanCards = Array.from(planCards).sort(function (a, b) {
+                var ageGroupA = a.getAttribute("data-age-group");
+                var ageGroupB = b.getAttribute("data-age-group");
+    
+                if (selectedOption === "ageGroup1") {
+                    return ageGroupA.localeCompare(ageGroupB);
+                } else if (selectedOption === "ageGroup2") {
+                    // Implement sorting logic for ageGroup2
+                } else if (selectedOption === "ageGroup3") {
+                    // Implement sorting logic for ageGroup3
+                } else if (selectedOption === "ageGroup4") {
+                    // Implement sorting logic for ageGroup4
+                }
+            });
+    
+            // Clear and append sorted cards to plansList
+            plansList.innerHTML = "";
+            sortedPlanCards.forEach(function (card) {
+                plansList.appendChild(card);
+            });
+        }
+    </script> 
+  
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    
+    
+    
+
+   </body>
+   
+
+</html>

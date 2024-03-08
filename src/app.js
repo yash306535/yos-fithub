@@ -36,8 +36,24 @@ hbs.registerPartials(partial_path);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
+
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+
+
+
+
+app.get('/about-us', async (req, res) => {
+    try {
+        // Fetch feedbacks from the database
+        const feedbacks = await Feedbacks.find();
+        
+        res.render('about-us', { feedbacks });
+    } catch (error) {
+        console.error('Error fetching feedbacks:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 app.get('/', (req, res) => {
     res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
@@ -70,6 +86,16 @@ app.get('/plans', async (req, res) => {
     } catch (error) {
         console.error('Error fetching plans:', error);
         res.status(500).send('Failed to fetch plans from the database');
+    }
+});
+
+app.get('/u_trainer1', async (req, res) => {
+    try {
+        const trainers = await TrainerProfile.find();
+        res.render('u_trainer1', { trainers: trainers });
+    } catch (error) {
+        console.error('Error fetching trainers:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 app.get('/show-users-buyed-plan', async (req, res) => {
@@ -255,7 +281,9 @@ module.exports = router;
 app.get("/login", (req, res) => { 
     res.render("login");
 });
-
+app.get("/u_register", (req, res) => { 
+    res.render("u_register");
+});
 app.get("/progress-tracking", (req, res) => { 
     res.render("progress-tracking");
 });
@@ -403,7 +431,6 @@ app.get('/show-trainer-profile', async (req, res) => {
 });
 
 
-
 app.post("/login", async (req, res) => {
     try {
         const { email_id, password } = req.body;
@@ -417,36 +444,47 @@ app.post("/login", async (req, res) => {
 
             if (isPasswordMatch) {
                 // Passwords match, login successful
-                console.log("Login successful");
 
                 // Check if the user has a profile
                 const userProfile = await Profile.findOne({ email: user.email_id });
-
+                console.log("login successful");
                 if (userProfile) {
                     // User profile exists, store user email in the session
                     req.session.userEmail = user.email_id;
                     // Redirect to the dashboard or any desired page
+                    console.log("login successful");
+
                     return res.redirect("/userDashboard");
+
                 } else {
                     // User profile not found, redirect to the user-profile page
+                    console.log("login successful");
+
                     return res.redirect("/user-profile");
+
                 }
             } else {
+                console.log("login insuccessful");
+
                 // Passwords do not match, login failed
-                console.log("Incorrect password");
-                return res.json({ success: false, message: "Invalid credentials" });
+                return res.status(401).json({ success: false, message: "Invalid credentials" });
             }
         } else {
+            console.log("login insuccessful");
+
             // User with the provided email does not exist
-            console.log("User not found");
-            return res.json({ success: false, message: "Invalid credentials" });
+            return res.status(401).json({ success: false, message: "Invalid credentials" });
         }
     } catch (error) {
+        console.log("login insuccessful");
+
         console.error(error);
         // Show an alert on the client side for any server error
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 });
+
+
   
 
 
@@ -568,19 +606,10 @@ app.post("/index", async (req, res) => {
     try {
         const { email_id, phone_no, password, confirmpassword } = req.body;
 
-        // Check if the passwords match
-        if (password !== confirmpassword) {
-            return res.status(400).json({ error: "Passwords do not match" });
-        }
-
-        // Check if the user already exists
-        const existingUser = await Register.findOne({ email_id });
-        if (existingUser) {
-            return res.status(400).json({ error: "User already exists with this email" });
-        }
+       
 
         // Hash the password
-        const saltRounds = 10;
+        const saltRounds = 10; // You can adjust the number of salt rounds
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Create a new user
@@ -588,19 +617,19 @@ app.post("/index", async (req, res) => {
             email_id,
             phone_no,
             password: hashedPassword,
-            confirmpassword: hashedPassword, // You may adjust this according to your requirements
+            confirmpassword: hashedPassword,
         });
 
         // Save the user to the database
         await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully" });
+        // Redirect or respond as needed
+        res.render('login');
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-  
 
 app.get("/calculator1", (req, res) => {
     res.render("calculator1");
@@ -616,6 +645,7 @@ app.get("/alogin", (req, res) => {
 
     res.render("alogin");
 });
+
 app.get("/ll", (req, res) => {
     res.render("ll");
 });
@@ -701,12 +731,7 @@ app.post("/ll", async (req, res) => {
 
 
 
-app.get("/blog-deatails", (req, res) => {
-    res.render("blog-deatails");
-});
-app.get("/blog", (req, res) => {
-    res.render("blog");
-});
+
 app.get("/bmi-calculator", (req, res) => {
     res.render("bmi-calculator");
 });

@@ -1,723 +1,154 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
+    <head>
+        <title>Multi-User Video Call</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Gym Template">
-    <meta name="keywords" content="Gym, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>YOS Fithub | Homepage</title>
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel='stylesheet' href='assets/css/app.css' type="text/css">
 
+        <script src='/socket.io/socket.io.js'></script>
+        <script type="module" src='assets/js/rtc.js'></script>
+        <script type="module" src='assets/js/events.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js" integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js'></script>
+        <script src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js'></script>
+        <script src='assets/js/autolink.js'></script>
+    </head>
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/barfiller.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/ffeedback-card.css">
-   
-</head>
+    <body>
+        <div class="custom-modal" id='recording-options-modal'>
+            <div class="custom-modal-content">
+                <div class="row text-center">
+                    <div class="col-md-6 mb-2">
+                        <span class="record-option" id='record-video'>Record video</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <span class="record-option" id='record-screen'>Record screen</span>
+                    </div>
+                </div>
 
-<body onload="display()">
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Offcanvas Menu Section Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="canvas-close">
-            <i class="fa fa-close"></i>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-outline-danger" id='closeModal'>Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="canvas-search search-switch">
-            <i class="fa fa-search"></i>
-        </div>
-        <nav class="canvas-menu mobile-menu">
-            <ul>
-                <li><a href="/index2">Home</a>                </li>
-                <li><a href="/about-us">About Us</a></li>
-                <li><a href="/classes">Classes</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/team">Our Team</a></li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="dropdown">
-                        <li><a href="/about-us">About us</a></li>
-                        <li><a href="/class-timetable">Classes timetable</a></li>
-                        <li><a href="/bmi-calculator">Bmi calculate</a></li>
-                        <li><a href="/team">Our team</a></li>
-                        <li><a href="/gallery">Gallery</a></li>
-                        <li><a href="/blog">Our blog</a></li>
-                    </ul>
-                </li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
+        
+        <nav class="navbar fixed-top bg-info rounded-0 d-print-none">
+            <div class="text-white">Video Call</div>
+
+            <div class="pull-right room-comm" hidden>
+                <span class="text-white mr-5">
+                    Unique Identifier: <span id='randomNumber'></span>
+                </span>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-video' title="Hide Video">
+                    <i class="fa fa-video text-white"></i>
+                </button>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-mute' title="Mute">
+                    <i class="fa fa-microphone-alt text-white"></i>
+                </button>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='share-screen' title="Share screen">
+                    <i class="fa fa-desktop text-white"></i>
+                </button>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect" id='record' title="Record">
+                    <i class="fa fa-dot-circle text-white"></i>
+                </button>
+
+                <button class="btn btn-sm text-white pull-right btn-no-effect" id='toggle-chat-pane'>
+                    <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
+                </button>
+
+                <button class="btn btn-sm rounded-0 btn-no-effect text-white">
+                    <a href="/" class="text-white text-decoration-none"><i class="fa fa-sign-out-alt text-white" title="Leave"></i></a>
+                </button>
+            </div>
         </nav>
+
+        <div class="container-fluid" id='room-create' hidden>
+            <div class="row">
+                <div class="col-12 h2 mt-5 text-center">Create Room</div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                    <span class="form-text small text-danger" id='err-msg'></span>
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3">
+                    <label for="room-name">Room Name</label>
+                    <input type="text" id='room-name' class="form-control rounded-0" placeholder="Room Name">
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3">
+                    <label for="your-name">Your Name</label>
+                    <input type="text" id='your-name' class="form-control rounded-0" placeholder="Your Name">
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3">
+                    <button id='create-room' class="btn btn-block rounded-0 btn-info">Create Room</button>
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3" id='room-created'></div>
+            </div>
+        </div>
+
+        <div class="container-fluid" id='username-set' hidden>
+            <div class="row">
+                <div class="col-12 h4 mt-5 text-center">Your Name</div>
+            </div>
+            
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                    <span class="form-text small text-danger" id='err-msg-username'></span>
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3">
+                    <label for="username">Your Name</label>
+                    <input type="text" id='username' class="form-control rounded-0" placeholder="Your Name">
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-4 mb-3">
+                    <button id='enter-room' class="btn btn-block rounded-0 btn-info">Enter Room</button>
+                </div>
+            </div>
+        </div>
         
-        <div id="mobile-menu-wrap"></div>
-        <div class="canvas-social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-youtube-play"></i></a>
-            <a href="#"><i class="fa fa-instagram"></i></a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu Section End -->
-
-     <!-- Header Section Begin -->
-<header class="header-section">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="logo">
-                    <a href="/index2">
-                        <img src="img/logo.png" alt="" style="	width: 120px;
-	                                                            height: 120px;
-                                                                margin-top: 5px;
-                                                                margin-left: 250px;
-                                                                ">
-                    </a>
+        <div class="container-fluid room-comm" hidden>
+            <div class="row">
+                <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 main" id='main-section'>                    
+                    <div class="row mt-2 mb-2" id='videos'></div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <nav class="nav-menu">
-                    <ul>
-                        <li><a href="/index2">Home</a></li>
 
-                        <li><a href="#">Account</a>
-                            <ul class="dropdown">
-                                <li><a href="/login">User login</a></li>
-                                <li><a href="/index">User Registration</a></li>
-                                <li><a href="/ll">Trainer Login</a></li>
-                                <li><a href="/trainer_reg">Trainer registration </a></li>
-                                <li id="log"><a href="/alogin" >Admin Login</a></li>
-                                
-                            </ul>
-                        </li>
-
-                        <li><a href="/trainer1">Trainers</a></li>
-                        <li><a href="/team">Our Team</a></li>                           
-                        <li><a href="./plans">Plans</a></li>
-
-                        <li><a href="#">Services</a>
-                            <ul class="dropdown">
-                                <li><a href="/about-us">About us</a></li>
-                                <li><a href="/class-timetable">Classes timetable</a></li>
-                                <li><a href="/calculator1">Health Calculators</a></li>
-                                <li><a href="/team">Our team</a></li>
-                                <li><a href="/feedback1">Feedback</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/contact">Contact</a></li>
-
-                        <li><a href="/about-us">About Us</a></li>
-                    </ul>
-                </nav>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="top-option">
-
-                    <div class="to-search search-switch">
-                        <i class="fa fa-search"></i>
-                    </div>
-                    <div class="to-social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                    </div>
-                    <!-- Add Login/Register Links -->
-              
-                </div>
-            </div>
-        </div>
-        <div class="canvas-open">
-            <i class="fa fa-bars"></i>
-        </div>
-    </div>
-</header>
-<!-- Header End -->
-
-
-    <!-- Hero Section Begin -->
-    <section class="hero-section">
-        <div class="hs-slider owl-carousel">
-            <div class="hs-item set-bg" data-setbg="img/hero/hero-1.jpg">
-                <div class="container">
+                <div class="col-md-3 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>
                     <div class="row">
-                        <div class="col-lg-6 offset-lg-6">
-                            <div class="hi-text">
-                                <span>Shape your body</span>
-                                <h1>Be <strong>strong</strong> traning hard</h1>
-                                <a href="#" class="primary-btn">Get info</a>
+                        <div class="col-12 text-center h2 mb-3">CHAT</div>
+                    </div>
+
+                    <div id='chat-messages'></div>
+
+                    <form>
+                        <div class="input-group mb-3" >
+                            <textarea  id="chat-input" class="form-control rounded-0 chat-box border-info" rows='3' placeholder="Type here..."></textarea>
+                            <div class="input-group-append" id='chat-input-btn'>
+                                <button type="button" class="btn btn-dark rounded-0 border-info btn-no-effect">Send</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hs-item set-bg" data-setbg="img/hero/hero-2.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 offset-lg-6">
-                            <div class="hi-text">
-                                <span>Shape your body</span>
-                                <h1>Be <strong>strong</strong> traning hard</h1>
-                                <a href="#" class="primary-btn">Get info</a>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Hero Section End -->
-
-    <!-- ChoseUs Section Begin -->
-    <section class="choseus-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Why chose us?</span>
-                        <h2>PUSH YOUR LIMITS FORWARD</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="cs-item">
-                        <span class="flaticon-034-stationary-bike"></span>
-                        <a href="https://sfhealthtech.com/"><h4>Modern equipment</h4></a>
-                        <p>
-                            Explore a curated selection of state-of-the-art fitness equipment, designed to elevate your workout experience and optimize performance.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="cs-item">
-                        <span class="flaticon-033-juice"></span>
-                        <h4>Healthy nutrition plan</h4>
-                        <p>Unlock a world of nourishment with our Nutrition Plan link, your gateway to personalized dietary guidance designed to complement your fitness journey.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="cs-item">
-                        <span class="flaticon-002-dumbell"></span>
-                        <h4>Proffesponal training plan</h4>
-                        <p>Elevate your fitness journey with our Professional Training Plan link, crafted for personalized guidance and expert-designed workouts.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="cs-item">
-                        <span class="flaticon-014-heart-beat"></span>
-                        <h4>Unique to your needs</h4>
-                        <p>Discover fitness solutions uniquely tailored to your needs with our specialized link, ensuring a personalized approach to your well-being journey.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ChoseUs Section End -->
-
-    <!-- Classes Section Begin -->
-    <section class="classes-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Our Classes</span>
-                        <h2>WHAT WE CAN OFFER</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-1.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>STRENGTH</span>
-                            <h5>Weightlifting</h5>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-2.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>Cardio</span>
-                            <h5>Indoor cycling</h5>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-3.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>STRENGTH</span>
-                            <h5>Kettlebell power</h5>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-4.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>Cardio</span>
-                            <h4>Indoor cycling</h4>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="class-item">
-                        <div class="ci-pic">
-                            <img src="img/classes/class-5.jpg" alt="">
-                        </div>
-                        <div class="ci-text">
-                            <span>Training</span>
-                            <h4>Boxing</h4>
-                            <a href="#"><i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ChoseUs Section End -->
-
-    <!-- Banner Section Begin -->
-    <section class="banner-section set-bg" data-setbg="img/banner-bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="bs-text">
-                        <h2>registration now to get more deals</h2>
-                        <div class="bt-tips">Where health, beauty and fitness meet.</div>
-                        <a href="#" class="primary-btn  btn-normal">Appointment</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Banner Section End -->
-
-   <!-- Pricing Section Begin -->
-<section class="pricing-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <span>Our Plans</span>
-                    <h2>Choose your pricing plan</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-8">
-                <div class="ps-item">
-                    <h3>Class Drop-in</h3>
-                    <div class="pi-price">
-                        <h2>399 Rs.</h2>
-                        <span>SINGLE CLASS</span>
-                    </div>
-                    <ul>
-                        <li>Access to a single fitness class</li>
-                        <li>Unlimited use of fitness equipment</li>
-                        <li>Guidance from a personal trainer</li>
-                        <li>Specialized weight-loss classes</li>
-                        <li>Flexible month-to-month subscription</li>
-                        <li>No time restrictions</li>
-                    </ul>
-                    <a href="#" class="primary-btn pricing-btn">Enroll now</a>
-                    <a href="#" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-8">
-                <div class="ps-item">
-                    <h3>12 Month Unlimited</h3>
-                    <div class="pi-price">
-                        <h2>999 Rs.</h2>
-                        <span>UNLIMITED CLASSES</span>
-                    </div>
-                    <ul>
-                        <li>Access to unlimited fitness classes</li>
-                        <li>Unlimited use of fitness equipment</li>
-                        <li>Guidance from a personal trainer</li>
-                        <li>Specialized weight-loss classes</li>
-                        <li>Cost-effective 12-month subscription</li>
-                        <li>No time restrictions</li>
-                    </ul>
-                    <a href="#" class="primary-btn pricing-btn">Enroll now</a>
-                    <a href="#" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-8">
-                <div class="ps-item">
-                    <h3>6 Month Unlimited</h3>
-                    <div class="pi-price">
-                        <h2>599 Rs.</h2>
-                        <span>UNLIMITED CLASSES</span>
-                    </div>
-                    <ul>
-                        <li>Access to unlimited fitness classes</li>
-                        <li>Unlimited use of fitness equipment</li>
-                        <li>Guidance from a personal trainer</li>
-                        <li>Specialized weight-loss classes</li>
-                        <li>Flexible 6-month subscription</li>
-                        <li>No time restrictions</li>
-                    </ul>
-                    <a href="#" class="primary-btn pricing-btn">Enroll now</a>
-                    <a href="#" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Pricing Section End -->
-
-
-
-    <!-- Team Section Begin -->
-    <section class="team-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="team-title">
-                        <div class="section-title">
-                            <span>Our Team</span>
-                            <h2>TRAIN WITH EXPERTS</h2>
-                        </div>
-                        <a href="#" class="primary-btn btn-normal appoinment-btn">appointment</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="ts-slider owl-carousel">
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-1.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-2.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-3.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-4.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-5.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="ts-item set-bg" data-setbg="img/team/team-6.jpg">
-                            <div class="ts_text">
-                                <h4>Athart Rachel</h4>
-                                <span>Gym Trainer</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Team Section End -->
-       
-    <center><h2>User Feedback</h2></center>
-    <center>
-   <div id="feedbackSlider" class="feedback-slider">
-      
-
-       <!-- Feedback cards will be dynamically added here -->
-   </div>
-   <button id="prevButton">Previous</button>
-   <button id="nextButton">Next</button>
-   <br>
-   <br>
-</center>
-   <script>
-  // script.js
-const feedbackContainer = document.getElementById('feedbackSlider');
-let feedbacks = []; // Variable to store fetched feedback data
-let currentIndex = 0;
-let intervalId; // Variable to store the interval ID
-
-// Fetch feedback data from server
-fetch('/feedbacks')
-   .then(response => response.json())
-   .then(data => {
-       feedbacks = data;
-       renderFeedbacks(); // Call the function to render feedbacks after fetching
-       startInterval(); // Start the automatic transitioning
-   })
-   .catch(error => console.error('Error fetching feedbacks:', error));
-
-function renderFeedbacks() {
-   feedbackContainer.innerHTML = ''; // Clear existing feedbacks
-   feedbacks.forEach(feedback => {
-       const card = document.createElement('div');
-       card.className = 'feedback-card';
-       card.innerHTML = `<br><br>
-       <p class="star"> ${generateStars(feedback.rating)}</p>
-       <br>
-       <p class="feed"><strong>${feedback.feedback}</strong></p>
-       <p class="feed"><i><bold>${feedback.name}</bold></i></p>
-       <p class="feed"><strong>Contact:${feedback.contact}</strong></p>
-          
-          
-       `;
-       feedbackContainer.appendChild(card);
-   });
-   updateSlider();
-}
-
-function generateStars(rating) {
-   const fullStars = Math.floor(rating); // Number of full stars
-   const halfStar = rating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : ''; // Half star if rating is not an integer
-   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // Number of empty stars
-
-   let starsHTML = '';
-   for (let i = 0; i < fullStars; i++) {
-       starsHTML += '<i class="fas fa-star"></i>'; // Full star
-   }
-   starsHTML += halfStar; // Add the half star if applicable
-   for (let i = 0; i < emptyStars; i++) {
-       starsHTML += '<i class="far fa-star"></i>'; // Empty star
-   }
-   return starsHTML;
-}
-function updateSlider() {
-   const slider = document.querySelector('.feedback-slider');
-   slider.style.transform = `translateX(-${currentIndex * 310}px)`; // Adjust the width of each card + margin-right
-}
-
-function startInterval() {
-   intervalId = setInterval(() => {
-       nextFeedback();
-   }, 2000); // Change card every 2 seconds
-}
-
-function stopInterval() {
-   clearInterval(intervalId);
-}
-
-document.getElementById('prevButton').addEventListener('click', () => {
-   stopInterval();
-   prevFeedback();
-   startInterval();
-});
-
-document.getElementById('nextButton').addEventListener('click', () => {
-   stopInterval();
-   nextFeedback();
-   startInterval();
-});
-
-function nextFeedback() {
-   currentIndex = (currentIndex + 1) % feedbacks.length;
-   updateSlider();
-}
-
-function prevFeedback() {
-   currentIndex = (currentIndex - 1 + feedbacks.length) % feedbacks.length;
-   updateSlider();
-}
-
-// Other functions (nextFeedback, prevFeedback, updateSlider, startInterval, stopInterval) remain the same
-
-   </script>
-</div>
-
-    <!-- Get In Touch Section Begin -->
-    <div class="gettouch-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="gt-text">
-                        <i class="fa fa-map-marker"></i>
-                        <p>In front of new walchand collage was chawk ,solapur,413001<br/> MH 13</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gt-text">
-                        <i class="fa fa-mobile"></i>
-                        <ul>
-                            <li>7387638451</li>
-                            <li>9028130824</li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gt-text email">
-                        <i class="fa fa-envelope"></i>
-                        <p>Support.yosfithub@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Get In Touch Section End -->
-
-
-    <!-- Footer Section Begin -->
-    <section class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="fs-about">
-                        <div class="fa-logo">
-                            <a href="#"><img src="img/logo.png" alt=""></a>
-                        </div>
-                        <p>"Elevate your fitness journey with our expert trainers and personalized plans. Achieve your goals with a tailored approach to health and wellness on our innovative web platform."</p>
-                        <div class="fa-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-youtube-play"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa  fa-envelope-o"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="fs-widget">
-                        <h4>Useful links</h4>
-                        <ul>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Classes</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="fs-widget">
-                        <h4>Support</h4>
-                        <ul>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">My account</a></li>
-                            <li><a href="#">Subscribe</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="fs-widget">
-                        <h4>Tips & Guides</h4>
-                        <div class="fw-recent">
-                            <h6><a href="#">Physical fitness may help prevent depression, anxiety</a></h6>
-                            <ul>
-                                <li>3 min read</li>
-                                <li>20 Comment</li>
-                            </ul>
-                        </div>
-                        <div class="fw-recent">
-                            <h6><a href="#">Fitness: The best exercise to lose belly fat and tone up...</a></h6>
-                            <ul>
-                                <li>3 min read</li>
-                                <li>20 Comment</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="copyright-text">
-                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Footer Section End -->
-
-    <!-- Search model Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
-
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/masonry.pkgd.min.js"></script>
-    <script src="js/jquery.barfiller.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-   
-<script language ="javascript" type="text/javascript">
-function display()
-{
-    document.addEventListener('contextmenu',event=>event.preventDefault());
-}
- const currentPort = window.location.port;
-        
-        if (currentPort !== '4000') {  
-            // Hide the element if the port is not 4000
-            const logElement = document.getElementById('log');
-            logElement.style.display = 'none';
-        }
-   
-   </script>
-
-
-</body>
-
+    </body>
 </html>

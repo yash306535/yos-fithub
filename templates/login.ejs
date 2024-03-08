@@ -53,20 +53,10 @@
 					</div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
+						<button class="login100-form-btn" onclick="loginUser()">
+                            Login
+                        </button>
 					</div>
-
-					<div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-						<a class="txt2" href="#">
-							Username / Password?
-						</a>
-					</div>
-
 					<div class="text-center p-t-136">
 						<a class="txt2" href="/index">
 							Create your Account
@@ -97,11 +87,53 @@
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-    <script language ="javascript" type="text/javascript">
-function display()
-{
-    document.addEventListener('contextmenu',event=>event.preventDefault());
-}
-</script>
+
+	<script language="javascript" type="text/javascript">
+		function display() {
+			document.addEventListener('contextmenu', event => event.preventDefault());
+		}
+	
+		// Function to handle login using AJAX
+		function loginUser() {
+			var email = $('#email_id').val();
+			var password = $('#password').val();
+	
+			// Make an AJAX request
+			$.ajax({
+				type: 'POST',
+				url: '/login',
+				data: { email_id: email, password: password },
+				success: function (response, textStatus, xhr) {
+					if (xhr.status === 200) {
+						// HTTP status 200 OK, login successful
+						showAlert(response.message);
+	
+						// Check if the user profile exists
+						if (response.hasProfile) {
+							// Redirect to the user-dashboard or desired page
+							window.location.href = '/userDashboard';
+						} else {
+							// User profile not found, redirect to user-profile
+							window.location.href = '/user-profile';
+						}
+					} else if (xhr.status === 401) {
+						// HTTP status 401 Unauthorized, login failed
+						showAlert(response.message);
+					} else if (xhr.status === 500) {
+						// HTTP status 500 Internal Server Error
+						showAlert('Error during login. Please try again.');
+					} else {
+						// Handle other HTTP status codes as needed
+						showAlert('Unexpected error. Please try again.');
+					}
+				},
+				error: function (xhr, textStatus, error) {
+					// Display an error message for AJAX failure
+					showAlert('Error during login. Please try again.');
+				}
+			});
+		}
+	</script>
+	
 </body>
 </html>
