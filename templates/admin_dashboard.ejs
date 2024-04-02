@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Gym Template">
+    <meta name="keywords" content="Gym, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>YOS Fithub | Homepage</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/barfiller.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/ffeedback-card.css">
+   
+</head>
+
+<body onload="display()">
+    <!-- Page Preloder -->
+   
+    <!-- Offcanvas Menu Section Begin -->
+    <%- include ('admin_header') %>
+<!-- Header End -->
+
+
+    <!-- Hero Section Begin -->
+   
+    <!-- Hero Section End -->
+
+    <!-- ChoseUs Section Begin -->
+    <section class="choseus-section spad" style="height: 5cm;">
+      
+    </section>
+       
+    <center><h2>User Feedback</h2></center>
+    <center>
+   <div id="feedbackSlider" class="feedback-slider">
+      
+
+       <!-- Feedback cards will be dynamically added here -->
+   </div>
+   <button id="prevButton">Previous</button>
+   <button id="nextButton">Next</button>
+   <br>
+   <br>
+</center>
+   <script>
+  // script.js
+const feedbackContainer = document.getElementById('feedbackSlider');
+let feedbacks = []; // Variable to store fetched feedback data
+let currentIndex = 0;
+let intervalId; // Variable to store the interval ID
+
+// Fetch feedback data from server
+fetch('/feedbacks')
+   .then(response => response.json())
+   .then(data => {
+       feedbacks = data;
+       renderFeedbacks(); // Call the function to render feedbacks after fetching
+       startInterval(); // Start the automatic transitioning
+   })
+   .catch(error => console.error('Error fetching feedbacks:', error));
+
+function renderFeedbacks() {
+   feedbackContainer.innerHTML = ''; // Clear existing feedbacks
+   feedbacks.forEach(feedback => {
+       const card = document.createElement('div');
+       card.className = 'feedback-card';
+       card.innerHTML = `<br><br>
+       <p class="star"> ${generateStars(feedback.rating)}</p>
+       <br>
+       <p class="feed"><strong>${feedback.feedback}</strong></p>
+       <p class="feed"><i><bold>${feedback.name}</bold></i></p>
+       <p class="feed"><strong>Contact:${feedback.contact}</strong></p>
+          
+          
+       `;
+       feedbackContainer.appendChild(card);
+   });
+   updateSlider();
+}
+
+function generateStars(rating) {
+   const fullStars = Math.floor(rating); // Number of full stars
+   const halfStar = rating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : ''; // Half star if rating is not an integer
+   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0); // Number of empty stars
+
+   let starsHTML = '';
+   for (let i = 0; i < fullStars; i++) {
+       starsHTML += '<i class="fas fa-star"></i>'; // Full star
+   }
+   starsHTML += halfStar; // Add the half star if applicable
+   for (let i = 0; i < emptyStars; i++) {
+       starsHTML += '<i class="far fa-star"></i>'; // Empty star
+   }
+   return starsHTML;
+}
+function updateSlider() {
+   const slider = document.querySelector('.feedback-slider');
+   slider.style.transform = `translateX(-${currentIndex * 310}px)`; // Adjust the width of each card + margin-right
+}
+
+function startInterval() {
+   intervalId = setInterval(() => {
+       nextFeedback();
+   }, 2000); // Change card every 2 seconds
+}
+
+function stopInterval() {
+   clearInterval(intervalId);
+}
+
+document.getElementById('prevButton').addEventListener('click', () => {
+   stopInterval();
+   prevFeedback();
+   startInterval();
+});
+
+document.getElementById('nextButton').addEventListener('click', () => {
+   stopInterval();
+   nextFeedback();
+   startInterval();
+});
+
+function nextFeedback() {
+   currentIndex = (currentIndex + 1) % feedbacks.length;
+   updateSlider();
+}
+
+function prevFeedback() {
+   currentIndex = (currentIndex - 1 + feedbacks.length) % feedbacks.length;
+   updateSlider();
+}
+
+// Other functions (nextFeedback, prevFeedback, updateSlider, startInterval, stopInterval) remain the same
+
+   </script>
+</div>
+
+    <!-- Get In Touch Section Begin -->
+    <div class="gettouch-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="gt-text">
+                        <i class="fa fa-map-marker"></i>
+                        <p>In front of new walchand collage was chawk ,solapur,413001<br/> MH 13</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gt-text">
+                        <i class="fa fa-mobile"></i>
+                        <ul>
+                            <li>7387638451</li>
+                            <li>9028130824</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gt-text email">
+                        <i class="fa fa-envelope"></i>
+                        <p>Support.yosfithub@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Get In Touch Section End -->
+
+
+    <!-- Footer Section Begin -->
+    <section class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="fs-about">
+                        <div class="fa-logo">
+                            <a href="#"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <p>"Elevate your fitness journey with our expert trainers and personalized plans. Achieve your goals with a tailored approach to health and wellness on our innovative web platform."</p>
+                        <div class="fa-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa  fa-envelope-o"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="fs-widget">
+                        <h4>Useful links</h4>
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Classes</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="fs-widget">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Login</a></li>
+                            <li><a href="#">My account</a></li>
+                            <li><a href="#">Subscribe</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="fs-widget">
+                        <h4>Tips & Guides</h4>
+                        <div class="fw-recent">
+                            <h6><a href="#">Physical fitness may help prevent depression, anxiety</a></h6>
+                            <ul>
+                                <li>3 min read</li>
+                                <li>20 Comment</li>
+                            </ul>
+                        </div>
+                        <div class="fw-recent">
+                            <h6><a href="#">Fitness: The best exercise to lose belly fat and tone up...</a></h6>
+                            <ul>
+                                <li>3 min read</li>
+                                <li>20 Comment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="copyright-text">
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/masonry.pkgd.min.js"></script>
+    <script src="js/jquery.barfiller.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+   
+<script language ="javascript" type="text/javascript">
+function display()
+{
+    document.addEventListener('contextmenu',event=>event.preventDefault());
+}
+//  const currentPort = window.location.port;
+        
+//         if (currentPort !== '3000') {  
+//             // Hide the element if the port is not 4000
+//             const logElement = document.getElementById('log');
+//             logElement.style.display = 'none';
+//         }
+   
+   </script>
+<!-- Start of yos-fithub Zendesk Widget script --><script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=8211a165-34c2-4a41-a140-5f4fd9ac5269"> </script><!-- End of yos-fithub Zendesk Widget script -->
+
+</body>
+
+</html>

@@ -69,44 +69,30 @@
 </head>
 <body>
     
-
     <% if (trainerProfile) { %>
         <div class="container">
             <h1>Trainer Profile</h1>
             <h2><%= trainerProfile.trainerName %></h2>
     
             <div class="info-section">
-                <label for="specialization">Specialization:</label>
-                <input type="text" id="specialization" value="<%= trainerProfile.trainerSpecialization %>" readonly>
-    
-                <label for="experience">Experience:</label>
-                <input type="text" id="experience" value="<%= trainerProfile.trainerExperience %> years" readonly>
-    
-                <label for="certification">Certification:</label>
-                <input type="text" id="certification" value="<%= trainerProfile.trainerCertification %>" readonly>
-    
-                <label for="email">Email:</label>
-                <input type="email" id="email" value="<%= trainerProfile.trainerEmail %>" readonly>
-    
-                <label for="phone">Phone:</label>
-                <input type="tel" id="phone" value="<%= trainerProfile.trainerPhone %>" readonly>
-    
-                <label for="location">Location:</label>
-                <input type="text" id="location" value="<%= trainerProfile.trainerLocation %>" readonly>
-    
-                <label for="availability">Availability:</label>
-                <input type="text" id="availability" value="<%= trainerProfile.trainerAvailability %>" readonly>
-    
-                <label for="rate">Rate:</label>
-                <input type="text" id="rate" value="<%= trainerProfile.trainerRate %>" readonly>
-    
-                <label for="description">Description:</label>
-                <textarea id="description" readonly><%= trainerProfile.trainerDescription %></textarea>
+                <p><strong>Specialization:</strong> <%= trainerProfile.trainerSpecialization %></p>
+                <p><strong>Experience:</strong> <%= trainerProfile.trainerExperience %> years</p>
+                <p><strong>Certification:</strong> <%= trainerProfile.trainerCertification %></p>
+                <p><strong>Email:</strong> <%= trainerProfile.trainerEmail %></p>
+                <p><strong>Phone:</strong> <%= trainerProfile.trainerPhone %></p>
+                <p><strong>Location:</strong> <%= trainerProfile.trainerLocation %></p>
+                <p><strong>Availability:</strong> <%= trainerProfile.trainerAvailability %></p>
+                <p><strong>Rate:</strong> <%= trainerProfile.trainerRate %></p>
+                <div>
+                    <strong>Description:</strong>
+                    <p><%= trainerProfile.trainerDescription %></p>
+                </div>
             </div>
         </div>
     <% } else { %>
         <p>No trainer profile found.</p>
     <% } %>
+    
     
       
 

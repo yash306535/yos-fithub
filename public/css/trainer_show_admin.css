@@ -1,0 +1,232 @@
+/* Reset some default browser styles */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif; /* Change font */
+    color: #333; /* Default color */
+    transition: color 0.3s ease; /* Hover effect */
+    background-color: #f9f9f9; /* Background color */
+    padding: 10px 20px; /* Padding for better readability */
+    border-radius: 5px; /* Rounded corners */
+}
+
+h1:hover {
+    color: #ff3c00; /* Change color on hover */
+}
+
+
+.trainer {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius:1cm;
+    margin-bottom: 20px;
+    margin-left: 10px; 
+    margin-right: 10px; 
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(255, 1, 1, 0.777);
+}
+
+.trainer h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #ff4000; /* Orange color */
+    transition: color 0.3s ease; /* Hover effect */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Text shadow for depth */
+    font-weight: bold; /* Bold font weight */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Spacing between letters */
+}
+
+.trainer h2:hover {
+    color: #ff6638; /* Lighter shade of orange on hover */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+
+.trainer img {
+    display: block;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.specialization {
+    font-style: italic;
+}
+
+.plan-title {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.plan-container {
+    margin-top: 10px;
+}
+
+.plan {
+    list-style-type: none;
+    padding: 0;
+}
+
+.plan li {
+    margin-bottom: 10px;
+}
+
+.user-details {
+    margin-left: 20px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .trainer {
+        padding: 15px;
+    }
+
+    .trainer h2 {
+        font-size: 20px;
+    }
+
+    .trainer img {
+        max-width: 80px;
+    }
+
+    .user-details {
+        margin-left: 0;
+    }
+}
+
+/* Animation */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.5s ease-out;
+}
+
+/* Additional styling */
+h2, h3 {
+    color: #333;
+    font-family: 'Roboto', sans-serif; /* Stylish font */
+    transition: color 0.3s ease; /* Hover effect */
+}
+
+h2:hover, h3:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+/* Import the Roboto font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+p {
+    color: #666;
+    line-height: 1.5;
+}
+
+ul {
+    margin-bottom: 10px;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+/* Purchased plans section */
+.plan-details {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.plan-details h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif; /* Stylish font */
+    transition: color 0.3s ease; /* Hover effect */
+}
+
+.plan-details h3:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+/* Import the Roboto font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+.plan-details p {
+    margin-bottom: 5px;
+}
+
+/* User details container */
+.user-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.user-details-container {
+
+    width: 18%;
+    background-color: #fff;
+    border: 1px solid #232323;
+    border-radius: 1cm;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.user-details-container:hover {
+    border-color: #ff5e00; /* Change border color */
+    box-shadow: 0 0 20px rgba(255, 89, 0, 0.3); /* Increase box-shadow size */
+}
+
+
+@media screen and (max-width: 768px) {
+    .user-details-container {
+        width: 100%;
+    }
+}

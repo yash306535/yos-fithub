@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainers and Their Plan Purchases</title>
+    <link rel="stylesheet" href="css/trainer_show_admin.css">
+</head>
+<body>
+    <h1>Trainers and Their Plan Purchases</h1>
+    <ul class="trainers-list">
+        <% trainers.forEach(trainer => { %>
+            <li class="trainer">
+                <h2 class="trainer-name">Trainer: <%= trainer.trainerName %></h2>
+                <p class="specialization">Specialization: <%= trainer.trainerSpecialization %></p>
+                <p>Experience: <%= trainer.trainerExperience %> years</p>
+                <p>Certification: <%= trainer.trainerCertification %></p>
+                <p>Email: <%= trainer.trainerEmail %></p>
+                <p>Location: <%= trainer.trainerLocation %></p>
+                <p>Availability: <%= trainer.trainerAvailability %></p>
+                <p>Rate: $<%= trainer.trainerRate %> per session</p>
+                
+               
+                <h3 class="plan-title">Purchased Plans:</h3>
+                <div class="user-container">
+                    <% trainer.purchasedUsers.forEach(purchase => { %>
+                        <% const user = purchase.userId; %>
+                        <div class="user-details-container">
+                            <p>User Name: <%= user.name %></p>
+                            <p>User Email: <%= user.email %></p>
+                            <p>Plan ID: <%= purchase.planId %></p>
+                        </div>
+                    <% }); %>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

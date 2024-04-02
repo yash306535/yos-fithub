@@ -4,7 +4,7 @@ const path = require("path");
 const hbs = require("hbs");
 const router = express.Router();
 const connectDb = require("./db/conn");
-
+const Admin = require('./models/admin');
 const Register = require('./models/registers');
 const Trainer_Register = require('./models/Trainer_register');
 const Profile = require('./models/profile');
@@ -16,7 +16,6 @@ const Purchase = require('./models/purchaseSchema');
 const Progress = require('./models/Progress'); // Update with your actual model file name
 
 const multer = require('multer');
-const purchaseRoutes = require('./routes/purchase-routes');
 const MongoStore = require('connect-mongo');
 const port = process.env.PORT || 3000;
 const trainerRoutes = require('./routes/trainer-routes');
@@ -26,7 +25,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Fix the typo in the template path
 const template_path = path.join(__dirname, "../templates");
 const partial_path = path.join(__dirname, "../templates/partials");
-app.use('/api', purchaseRoutes);
 // Set up static files and view engine
 app.use(express.static(static_path));
 app.set("view engine", "ejs");
@@ -38,8 +36,9 @@ app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '../templates'));
 
 const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser');
 
-
+app.use(bodyParser.json());
 
 
 app.get('/about-us', async (req, res) => {
@@ -130,25 +129,31 @@ app.get('/show-users-buyed-plan', async (req, res) => {
 });
 app.post('/buy-plan', async (req, res) => {
     try {
-        const userEmail = req.session.userEmail; // Assuming the user's email is stored in the session
+        const userEmail = req.session.userEmail;
         const planId = req.body.planId;
         const trainerEmail = req.body.trainerEmail;
 
-        const user = await Profile.findOne({ email: userEmail });
+        console.log('User Email:', userEmail);
+        console.log('Plan ID:', planId);
+        console.log('Trainer Email:', trainerEmail);
 
+        const user = await Profile.findOne({ email: userEmail });
+        console.log('User:', user);
         if (!user) {
+            console.log('User not found');
             return res.status(404).send('User not found');
         }
 
         const plan = await FitnessPlan.findById(planId);
-
+        console.log('Plan:', plan);
         if (!plan) {
+            console.log('Plan not found');
             return res.status(404).send('Plan not found');
         }
 
         if (user.purchasedPlans.some(purchasedPlan => purchasedPlan.planId.equals(plan._id))) {
-            // User has already purchased the plan
-            return res.status(400).json({ warning: 'You have already purchased this plan you cant buy same plan again' });
+            console.log('User already purchased this plan');
+            return res.status(400).json({ warning: 'You have already purchased this plan. You cannot buy the same plan again.' });
         }
 
         user.purchasedPlans.push({
@@ -157,17 +162,24 @@ app.post('/buy-plan', async (req, res) => {
         });
 
         await user.save();
+        console.log('User saved successfully');
 
-        const trainer = await TrainerProfile.findOne({ email: trainerEmail });
+        let trainer = await TrainerProfile.findOne({ trainerEmail });
+        console.log('Trainer:', trainer);
 
-        if (trainer) {
-            trainer.purchasedUsers.push({
-                userId: user._id,
-                planId: plan._id,
-            });
-
-            await trainer.save();
+        if (!trainer) {
+            console.log('Creating a new TrainerProfile document');
+            // Create a new TrainerProfile document if it doesn't exist
+            trainer = new TrainerProfile({ trainerEmail });
         }
+
+        trainer.purchasedUsers.push({
+            userId: user._id,
+            planId: plan._id,
+        });
+
+        await trainer.save();
+        console.log('Trainer saved successfully');
 
         res.status(200).json({ success: true, message: 'Plan purchased successfully' });
     } catch (error) {
@@ -175,6 +187,10 @@ app.post('/buy-plan', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+
+
 
 
 
@@ -485,8 +501,6 @@ app.post("/login", async (req, res) => {
 });
 
 
-  
-
 
 
 
@@ -584,6 +598,20 @@ app.post('/save-trainer-profile', trainerImgUpload.single('profileImage1'), asyn
         return res.status(500).send('Internal Server Error');
     }
 });
+
+app.get('/trainers', async (req, res) => {
+    try {
+        // Fetch trainers with their purchased plans
+        const trainers = await TrainerProfile.find().populate('purchasedUsers.userId');
+
+        // Render the EJS template passing trainers data
+        res.render('trainers', { trainers });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
 app.get('/show-trainer-to-user/:trainerId', async (req, res) => {
     try {
         // Retrieve the trainer profile using the provided trainerId
@@ -649,8 +677,31 @@ app.get("/alogin", (req, res) => {
 app.get("/ll", (req, res) => {
     res.render("ll");
 });
+app.post('/alogin', async (req, res) => {
+    const { email, pass } = req.body;
+
+    try {
+        const admin = await Admin.findOne({ email: email, password: pass });
+
+        if (admin) {
+            // If admin found, redirect to admin dashboard
+            res.redirect('/admin_dashboard');
+        } else {
+            // If admin not found, redirect back to login page
+            res.redirect('/alogin');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get("/admin_dashboard", (req, res) => {
+    res.render("admin_dashboard"); // Assuming you're using a view engine like EJS or Pug
+});
+
 app.get("/add_plan", async (req, res) => {
-    // Assuming that the trainer's name is stored in the session under the key "trainerName"
+    // Assuminthe trainer's name is stored in the session under the key "trainerName"
     const trainerName = req.session.trainerName;
     const trainerEmail= req.session.trainerEmail;
     res.render("add_plan", { trainerName, trainerEmail });
@@ -884,6 +935,16 @@ app.get('/trainer1', async (req, res) => {
     try {
         const trainers = await TrainerProfile.find();
         res.render('trainer1', { trainers: trainers });
+    } catch (error) {
+        console.error('Error fetching trainers:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/trainer_for_admin', async (req, res) => {
+    try {
+        const trainers = await TrainerProfile.find();
+        res.render('trainer_for_admin', { trainers: trainers });
     } catch (error) {
         console.error('Error fetching trainers:', error);
         res.status(500).send('Internal Server Error');

@@ -251,44 +251,50 @@
     </script> 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded event fired'); // Log when DOM content is loaded
+    
         const buyPlanButtons = document.querySelectorAll('.buy-plan-btn');
-
+        console.log('Buy Plan buttons found:', buyPlanButtons.length); // Log the number of Buy Plan buttons found
+    
         buyPlanButtons.forEach(button => {
             button.addEventListener('click', async (event) => {
                 event.preventDefault();
-
+    
+                console.log('Buy Plan button clicked'); // Log when Buy Plan button is clicked
+    
                 const planId = button.dataset.planId;
-                const trainerEmail = button.dataset.trainerEmail; // Retrieve trainer's email
-                console.log(trainerEmail);
+                const trainerEmail = button.dataset.trainerEmail;
+    
+                console.log('Plan ID:', planId); // Log the Plan ID
+                console.log('Trainer Email:', trainerEmail); // Log the Trainer Email
+    
                 try {
                     const response = await fetch('/buy-plan', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ planId, trainerEmail }), // Include trainer's email in the request
+                        body: JSON.stringify({ planId, trainerEmail }), // Include planId and trainerEmail in the request body
                     });
-
-                    const data = await response.json();
-
+    
+                    console.log('Response:', response); // Log the response
+    
                     if (response.ok) {
-                        // Plan purchased successfully
                         alert('Plan purchased successfully');
                         // Optionally, you can redirect or update UI here
-                    } else if (data.warning) {
-                        // User has already purchased the plan
-                        alert(data.warning);
                     } else {
-                        // Failed to purchase plan
-                        console.error('Failed to purchase plan');
+                        alert('Failed to purchase plan');
                     }
                 } catch (error) {
-                    console.error('Error processing plan purchase:', error);
+                    alert('Error processing plan purchase:', error);
                 }
             });
         });
     });
-</script>
+    </script>
+    
+
+    
 
 
 
