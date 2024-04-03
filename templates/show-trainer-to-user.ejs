@@ -79,6 +79,54 @@ a {
 a:hover {
     background-color: #333;
 }
+.container1 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.details-container {
+    flex: 1;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+a {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #090909;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 
     </style>
 </head>
@@ -90,44 +138,45 @@ a:hover {
                 <img src="/trainerimg/<%= trainer.profileImage1 %>" alt="Trainer Photo" class="profile-image">
             <% } else { %>
                 <!-- You can provide a default image if profileImage1 is not available -->
-                <img src="default-profile-image.jpg" alt="Default Photo" class="profile-image">
+                <img  alt="Default Photo" class="profile-image">
             <% } %>
             <div class="details-container">
-                <label for="trainerName">Trainer Name:</label>
-                <input type="text" id="trainerName" value="<%= trainer.trainerName %>" readonly>
-
-                <label for="trainerEmail">Email:</label>
-                <input type="text" id="trainerEmail" value="<%= trainer.trainerEmail %>" readonly>
-
-                <label for="trainerSpecialization">Specialization:</label>
-                <input type="text" id="trainerSpecialization" value="<%= trainer.trainerSpecialization %>" readonly>
-
-                <label for="trainerExperience">Experience:</label>
-                <input type="text" id="trainerExperience" value="<%= trainer.trainerExperience %>" readonly>
-
-                <label for="trainerCertification">Certification:</label>
-                <input type="text" id="trainerCertification" value="<%= trainer.trainerCertification %>" readonly>
-
-                <label for="trainerPhone">Phone:</label>
-                <input type="text" id="trainerPhone" value="<%= trainer.trainerPhone %>" readonly>
-
-                <label for="trainerLocation">Location:</label>
-                <input type="text" id="trainerLocation" value="<%= trainer.trainerLocation %>" readonly>
-
-                <label for="trainerAvailability">Availability:</label>
-                <input type="text" id="trainerAvailability" value="<%= trainer.trainerAvailability %>" readonly>
-
-                <label for="trainerRate">Rate:</label>
-                <input type="text" id="trainerRate" value="<%= trainer.trainerRate %>" readonly>
-
-                <label for="trainerDescription">Description:</label>
-                <textarea id="trainerDescription" readonly><%= trainer.trainerDescription %></textarea>
-
-                <!-- Add more labels and text boxes for other details -->
-
+                <h2>Trainer Name:</h2>
+                <p><%= trainer.trainerName %></p>
+    
+                <h2>Email:</h2>
+                <p><%= trainer.trainerEmail %></p>
+    
+                <h2>Specialization:</h2>
+                <p><%= trainer.trainerSpecialization %></p>
+    
+                <h2>Experience:</h2>
+                <p><%= trainer.trainerExperience %></p>
+    
+                <h2>Certification:</h2>
+                <p><%= trainer.trainerCertification %></p>
+    
+                <h2>Phone:</h2>
+                <p><%= trainer.trainerPhone %></p>
+    
+                <h2>Location:</h2>
+                <p><%= trainer.trainerLocation %></p>
+    
+                <h2>Availability:</h2>
+                <p><%= trainer.trainerAvailability %></p>
+    
+                <h2>Rate:</h2>
+                <p><%= trainer.trainerRate %></p>
+    
+                <h2>Description:</h2>
+                <p><%= trainer.trainerDescription %></p>
+    
+                <!-- Add more headings and paragraphs for other details -->
+    
                 <a href="/trainer1">Back to All Trainers</a>
             </div>
         </div>
     </div>
+    
 </body>
 </html>
