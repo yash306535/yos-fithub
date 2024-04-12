@@ -251,16 +251,22 @@
         }
     </script> 
 <script>
-    // Add event listener to handle payment button click
     document.querySelectorAll('.buy-plan-btn').forEach(button => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
-    
+
             const planId = button.dataset.planId;
             const trainerEmail = button.dataset.trainerEmail;
-    
+
+            // Check if the user has already purchased the plan
+            const alreadyPurchased = await checkPlanPurchase(planId);
+            if (alreadyPurchased) {
+                alert('You have already purchased this plan.');
+                return;
+            }
+
             // Fetch details of the selected plan (name, price, etc.) from the server if needed
-    
+
             // Create Razorpay order
             const response = await fetch('/create-razorpay-order', {
                 method: 'POST',
@@ -269,22 +275,24 @@
                 },
                 body: JSON.stringify({ planId, trainerEmail }),
             });
-    
+
             const orderData = await response.json();
-    
+
             // Open Razorpay payment modal
             var options = {
-                key: 'rzp_live_2ZbLICnvIdASq6', // Your Razorpay API key
+                key: 'YOUR_RAZORPAY_KEY_ID', // Your Razorpay API key
                 amount: orderData.amount, // Amount in paise
                 currency: 'INR',
-                name: 'Your Gym Name',
+                name: 'YOS FITHUB',
                 description: 'Plan Purchase',
                 order_id: orderData.id,
                 handler: function (response) {
-                    // Handle successful payment (you can send the response to the server for verification)
+                    // Handle successful payment
                     console.log('Payment success:', response);
-    
-                    // After successful payment, you can perform any additional actions here, such as updating the UI or notifying the user
+
+                    // After successful payment, perform additional actions here
+                    // For example, trigger the plan purchase API call
+                    purchasePlan(planId, trainerEmail);
                 },
                 prefill: {
                     email: 'user@example.com', // Default email address (optional)
@@ -301,7 +309,43 @@
             rzp.open();
         });
     });
-    </script>
+
+    async function checkPlanPurchase(planId) {
+        try {
+            const response = await fetch(`/check-plan-purchase?planId=${planId}`);
+            const data = await response.json();
+            return data.alreadyPurchased;
+        } catch (error) {
+            console.error('Error checking plan purchase:', error);
+            return false;
+        }
+    }
+
+    async function purchasePlan(planId, trainerEmail) {
+        try {
+            const response = await fetch('/buy-plan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ planId, trainerEmail }), // Include planId and trainerEmail in the request body
+            });
+
+            console.log('Purchase plan response:', response);
+
+            if (response.ok) {
+                alert('Plan purchased successfully');
+                // Optionally, you can redirect or update UI here
+            } else {
+                alert('Failed to purchase plan');
+            }
+        } catch (error) {
+            alert('Error processing plan purchase:', error);
+        }
+    }
+</script>
+
+
     
 
     

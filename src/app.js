@@ -82,7 +82,24 @@ app.use(
     })
 );
 
+router.get('/check-plan-purchase', async (req, res) => {
+    try {
+        const { planId } = req.query;
+        const { userEmail } = req.session;
 
+        // Find the user's profile
+        const user = await Profile.findOne({ email: userEmail });
+
+        // Check if the user has purchased the plan
+        const alreadyPurchased = user.purchasedPlans.some(plan => plan.planId.equals(planId));
+
+        // Send response indicating whether the plan has been purchased
+        res.json({ alreadyPurchased });
+    } catch (error) {
+        console.error('Error checking plan purchase:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 // const Razorpay = require('razorpay');
 // const razorpay = new Razorpay({
 //     key_id: 'YOUR_RAZORPAY_KEY_ID',
