@@ -16,6 +16,7 @@ const Purchase = require('./models/purchaseSchema');
 const Progress = require('./models/Progress'); // Update with your actual model file name
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json'); // Adjusted path
+const Comment = require('./models/comment');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -51,6 +52,28 @@ const razorpay = new Razorpay({
     key_secret: 'Yo9X3SUMAtgJQ0qiVrFox3Z1',
 });
 
+app.post('/submit-comment', async (req, res) => {
+    try {
+        const { name, email, website, comment } = req.body;
+
+        // Create a new comment document
+        const newComment = new Comment({
+            name,
+            email,
+            website,
+            comment
+        });
+
+        // Save the comment to the database
+        await newComment.save();
+
+        // Send a success response
+        res.status(201).json({ message: 'Comment submitted successfully' });
+    } catch (error) {
+        console.error('Error submitting comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 app.get('/about-us', async (req, res) => {
     try {
