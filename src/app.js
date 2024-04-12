@@ -14,10 +14,16 @@ const FitnessPlan = require('./models/trainer_plan');
 const session = require('express-session');
 const Purchase = require('./models/purchaseSchema');
 const Progress = require('./models/Progress'); // Update with your actual model file name
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccountKey.json'); // Adjusted path
 
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: 'gs://yos-fithub-5c0ee.appspot.com/trainerImages'
+  });
 const multer = require('multer');
 const MongoStore = require('connect-mongo');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const trainerRoutes = require('./routes/trainer-routes');
 const static_path = path.join(__dirname, "../public");
 app.use(express.static(static_path));
@@ -39,6 +45,11 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+const Razorpay = require('razorpay');
+const razorpay = new Razorpay({
+    key_id: 'rzp_live_2ZbLICnvIdASq6',
+    key_secret: 'Yo9X3SUMAtgJQ0qiVrFox3Z1',
+});
 
 
 app.get('/about-us', async (req, res) => {
@@ -53,7 +64,10 @@ app.get('/about-us', async (req, res) => {
     }
 });
 
-
+app.get('/../Video-Call-App-NodeJS-master/src/index.html', (req, res) => {
+    // Render the "v_call.ejs" file in the "templates" directory
+    res.render('../Video-Call-App-NodeJS-master/src/index.html');
+});
 app.get('/', (req, res) => {
     res.redirect('index2'); // Renders the index2.ejs from the 'templates' folder
   });
@@ -127,6 +141,35 @@ app.get('/show-users-buyed-plan', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+app.post('/create-razorpay-order', async (req, res) => {
+    try {
+        const planId = req.body.planId;
+        const trainerEmail = req.body.trainerEmail;
+
+        // Fetch details of the plan from the database (e.g., price) if needed
+        const plan = await FitnessPlan.findById(planId);
+
+        // Calculate amount (convert price to paise)
+        const amount = plan.price * 100;
+
+        // Create Razorpay order
+        const order = await razorpay.orders.create({
+            amount: amount,
+            currency: 'INR',
+            receipt: 'receipt_order_' + planId,
+            notes: {
+                planId: planId,
+                trainerEmail: trainerEmail,
+            },
+        });
+
+        res.json({ id: order.id, amount: amount });
+    } catch (error) {
+        console.error('Error creating Razorpay order:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.post('/buy-plan', async (req, res) => {
     try {
         const userEmail = req.session.userEmail;
@@ -544,60 +587,68 @@ app.get("/trainer-profile", (req, res) => {
     res.render("trainer-profile", { trainerName: trainerName,trainerEmail: req.session.trainerEmail,trainerPhone: req.session.trainerPhone});
 });
 
-
-const trainerImgStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/trainerimg');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    },
-});
-
+const trainerImgStorage = multer.memoryStorage(); // Store file in memory for Firebase upload
 const trainerImgUpload = multer({ storage: trainerImgStorage });
 
-// ... Other routes
 
+// Route for saving trainer profile with image upload
 app.post('/save-trainer-profile', trainerImgUpload.single('profileImage1'), async (req, res) => {
-        const tname=req.session.trainerName;
-        const temail=req.session.trainerEmail;
-
+    const tname = req.session.trainerName;
+    const temail = req.session.trainerEmail;
+  
     try {
-        const {
-            trainerName,
-            trainerSpecialization,
-            trainerExperience,
-            trainerCertification,
-            trainerEmail,
-            trainerPhone,
-            trainerLocation,
-            trainerAvailability,
-            trainerRate,
-            trainerDescription,
-        } = req.body;
+      const {
+        trainerName,
+        trainerSpecialization,
+        trainerExperience,
+        trainerCertification,
+        trainerEmail,
+        trainerPhone,
+        trainerLocation,
+        trainerAvailability,
+        trainerRate,
+        trainerDescription,
+      } = req.body;
+  
+      // Check if file was uploaded
+      if (!req.file) {
+        throw new Error('No image uploaded');
+      }
+  
+      // Upload image to Firebase Storage
+      const bucket = admin.storage().bucket();
+      const filename = 'trainerImages/' + req.file.originalname;
+      const file = bucket.file(filename);
+      console.log(req.file);
 
-        const trainerProfile = new TrainerProfile({
-            trainerName:tname,
-            trainerSpecialization,
-            trainerExperience,
-            trainerCertification,
-            trainerEmail:temail,
-            trainerPhone,
-            trainerLocation,
-            trainerAvailability,
-            trainerRate,
-            trainerDescription,
-            profileImage1: req.file ? req.file.filename : null,
-        });
-
-        await trainerProfile.save();
-
-        res.redirect("trainerdashboard");
+      await file.save(req.file.buffer, { contentType: req.file.mimetype });
+      const imageUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
+  
+      // Save trainer profile with image URL
+      const trainerProfile = new TrainerProfile({
+        trainerName: tname,
+        trainerSpecialization,
+        trainerExperience,
+        trainerCertification,
+        trainerEmail: temail,
+        trainerPhone,
+        trainerLocation,
+        trainerAvailability,
+        trainerRate,
+        trainerDescription,
+        profileImage1: imageUrl
+      });
+  
+      await trainerProfile.save();
+  
+      res.redirect("trainerdashboard");
     } catch (error) {
-        console.error(error);
-        return res.status(500).send('Internal Server Error');
+      console.error('Error uploading image:', error);
+      return res.status(500).send('Internal Server Error');
     }
-});
+  });
+  
+  
 
 app.get('/trainers', async (req, res) => {
     try {

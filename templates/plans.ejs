@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="css/plan.css" type="text/css">
-    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </head>
 
 <body onload="display()">
@@ -250,45 +251,54 @@
         }
     </script> 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded event fired'); // Log when DOM content is loaded
+    // Add event listener to handle payment button click
+    document.querySelectorAll('.buy-plan-btn').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            event.preventDefault();
     
-        const buyPlanButtons = document.querySelectorAll('.buy-plan-btn');
-        console.log('Buy Plan buttons found:', buyPlanButtons.length); // Log the number of Buy Plan buttons found
+            const planId = button.dataset.planId;
+            const trainerEmail = button.dataset.trainerEmail;
     
-        buyPlanButtons.forEach(button => {
-            button.addEventListener('click', async (event) => {
-                event.preventDefault();
+            // Fetch details of the selected plan (name, price, etc.) from the server if needed
     
-                console.log('Buy Plan button clicked'); // Log when Buy Plan button is clicked
-    
-                const planId = button.dataset.planId;
-                const trainerEmail = button.dataset.trainerEmail;
-    
-                console.log('Plan ID:', planId); // Log the Plan ID
-                console.log('Trainer Email:', trainerEmail); // Log the Trainer Email
-    
-                try {
-                    const response = await fetch('/buy-plan', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ planId, trainerEmail }), // Include planId and trainerEmail in the request body
-                    });
-    
-                    console.log('Response:', response); // Log the response
-    
-                    if (response.ok) {
-                        alert('Plan purchased successfully');
-                        // Optionally, you can redirect or update UI here
-                    } else {
-                        alert('Failed to purchase plan');
-                    }
-                } catch (error) {
-                    alert('Error processing plan purchase:', error);
-                }
+            // Create Razorpay order
+            const response = await fetch('/create-razorpay-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ planId, trainerEmail }),
             });
+    
+            const orderData = await response.json();
+    
+            // Open Razorpay payment modal
+            var options = {
+                key: 'rzp_live_2ZbLICnvIdASq6', // Your Razorpay API key
+                amount: orderData.amount, // Amount in paise
+                currency: 'INR',
+                name: 'Your Gym Name',
+                description: 'Plan Purchase',
+                order_id: orderData.id,
+                handler: function (response) {
+                    // Handle successful payment (you can send the response to the server for verification)
+                    console.log('Payment success:', response);
+    
+                    // After successful payment, you can perform any additional actions here, such as updating the UI or notifying the user
+                },
+                prefill: {
+                    email: 'user@example.com', // Default email address (optional)
+                },
+                notes: {
+                    planId: planId,
+                    trainerEmail: trainerEmail,
+                },
+                theme: {
+                    color: '#F37254' // Color for the payment button (optional)
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
         });
     });
     </script>
